@@ -52,7 +52,7 @@ const UNSPLASH = {
 
 const DESCRIPTIONS = {
   Footwear: 'Crafted with precision-engineered materials for unmatched comfort and style. Designed to perform across every terrain and occasion.',
-  Apparel: 'Premium fabric with an elite cut — engineered for movement, comfort, and lasting style. A wardrobe essential reinvented.',
+  Apparel: 'Premium fabric with an ryze cut — engineered for movement, comfort, and lasting style. A wardrobe essential reinvented.',
   Electronics: 'Next-generation technology meets premium design. Built for performance, precision, and a seamless user experience.',
   Beauty: 'Formulated with clinically-tested actives and luxury ingredients. Designed to deliver visible, lasting results.',
   Accessories: 'Handcrafted from premium materials with meticulous attention to detail. Elevate every outfit and every moment.',
@@ -61,29 +61,29 @@ const DESCRIPTIONS = {
 
 const BASE_PRODUCTS = [
   // Footwear
-  { retailHeading: 'AirMax Quantum Runner', category: 'Footwear', department: 'Running', regularPrice: 8999, discountPrice: 6499, sizes: ['7','8','9','10','11'], taxRate: 12, imgs: 'footwear' },
-  { retailHeading: 'LuxeStep Leather Derby', category: 'Footwear', department: 'Formal', regularPrice: 12999, discountPrice: 9999, sizes: ['7','8','9','10'], taxRate: 12, imgs: 'footwear' },
-  { retailHeading: 'PhantomGrip Trail Shoe', category: 'Footwear', department: 'Outdoor', regularPrice: 7499, discountPrice: 5999, sizes: ['8','9','10','11'], taxRate: 12, imgs: 'footwear' },
-  { retailHeading: 'Velvet Sole Loafer', category: 'Footwear', department: 'Casual', regularPrice: 5999, discountPrice: 4299, sizes: ['7','8','9','10','11'], taxRate: 12, imgs: 'footwear' },
-  
+  { retailHeading: 'AirMax Quantum Runner', category: 'Footwear', department: 'Running', regularPrice: 8999, discountPrice: 6499, sizes: ['7', '8', '9', '10', '11'], taxRate: 12, imgs: 'footwear' },
+  { retailHeading: 'LuxeStep Leather Derby', category: 'Footwear', department: 'Formal', regularPrice: 12999, discountPrice: 9999, sizes: ['7', '8', '9', '10'], taxRate: 12, imgs: 'footwear' },
+  { retailHeading: 'PhantomGrip Trail Shoe', category: 'Footwear', department: 'Outdoor', regularPrice: 7499, discountPrice: 5999, sizes: ['8', '9', '10', '11'], taxRate: 12, imgs: 'footwear' },
+  { retailHeading: 'Velvet Sole Loafer', category: 'Footwear', department: 'Casual', regularPrice: 5999, discountPrice: 4299, sizes: ['7', '8', '9', '10', '11'], taxRate: 12, imgs: 'footwear' },
+
   // Apparel
-  { retailHeading: 'Obsidian Slim-Fit Tee', category: 'Apparel', department: 'Casual', regularPrice: 1999, discountPrice: 1399, sizes: ['XS','S','M','L','XL'], taxRate: 5, imgs: 'apparel' },
-  { retailHeading: 'Elite Merino Crewneck', category: 'Apparel', department: 'Luxury', regularPrice: 8999, discountPrice: 6499, sizes: ['S','M','L','XL'], taxRate: 5, imgs: 'apparel' },
-  { retailHeading: 'Carbon Jogger Set', category: 'Apparel', department: 'Activewear', regularPrice: 5999, discountPrice: 4299, sizes: ['XS','S','M','L','XL'], taxRate: 5, imgs: 'apparel' },
-  
+  { retailHeading: 'Obsidian Slim-Fit Tee', category: 'Apparel', department: 'Casual', regularPrice: 1999, discountPrice: 1399, sizes: ['XS', 'S', 'M', 'L', 'XL'], taxRate: 5, imgs: 'apparel' },
+  { retailHeading: 'ryze Merino Crewneck', category: 'Apparel', department: 'Luxury', regularPrice: 8999, discountPrice: 6499, sizes: ['S', 'M', 'L', 'XL'], taxRate: 5, imgs: 'apparel' },
+  { retailHeading: 'Carbon Jogger Set', category: 'Apparel', department: 'Activewear', regularPrice: 5999, discountPrice: 4299, sizes: ['XS', 'S', 'M', 'L', 'XL'], taxRate: 5, imgs: 'apparel' },
+
   // Electronics
   { retailHeading: 'BassX Pro Wireless ANC', category: 'Electronics', department: 'Audio', regularPrice: 24999, discountPrice: 19499, taxRate: 18, imgs: 'electronics' },
   { retailHeading: 'Crystal 4K Smartwatch', category: 'Electronics', department: 'Wearable', regularPrice: 18999, discountPrice: 14999, taxRate: 18, imgs: 'electronics' },
   { retailHeading: 'HoloPod Earbuds Ultra', category: 'Electronics', department: 'Audio', regularPrice: 12999, discountPrice: 9999, taxRate: 18, imgs: 'electronics' },
-  
+
   // Beauty
   { retailHeading: 'Luxe Glow Serum 30ml', category: 'Beauty', department: 'Skincare', regularPrice: 3999, discountPrice: 2999, taxRate: 18, imgs: 'beauty' },
   { retailHeading: 'Onyx Velvet Matte Lipstick', category: 'Beauty', department: 'Makeup', regularPrice: 1499, discountPrice: 999, taxRate: 18, imgs: 'beauty' },
-  
+
   // Accessories
   { retailHeading: 'Obsidian Leather Wallet', category: 'Accessories', department: 'Leather', regularPrice: 3499, discountPrice: 2499, taxRate: 12, imgs: 'accessories' },
-  { retailHeading: 'Elite Carbon Belt', category: 'Accessories', department: 'Leather', regularPrice: 2999, discountPrice: 1999, taxRate: 12, imgs: 'accessories' },
-  
+  { retailHeading: 'ryze Carbon Belt', category: 'Accessories', department: 'Leather', regularPrice: 2999, discountPrice: 1999, taxRate: 12, imgs: 'accessories' },
+
   // Home
   { retailHeading: 'Marble Desk Organiser', category: 'Home', department: 'Office', regularPrice: 3499, discountPrice: 2499, taxRate: 18, imgs: 'home' },
   { retailHeading: 'Bamboo Zen Storage Box', category: 'Home', department: 'Organisation', regularPrice: 2999, discountPrice: 1999, taxRate: 18, imgs: 'home' },
@@ -113,7 +113,7 @@ export default function Seeder() {
       for (let i = 0; i < targetCount; i++) {
         // Pick a random base template
         const base = BASE_PRODUCTS[Math.floor(Math.random() * BASE_PRODUCTS.length)]
-        
+
         // Pick 3-4 random unique images for "multiple photos" requirement
         const imgPool = UNSPLASH[base.imgs] || UNSPLASH.apparel
         const shuffledImgs = [...imgPool].sort(() => 0.5 - Math.random())
@@ -121,7 +121,7 @@ export default function Seeder() {
 
         // Give it a unique variation name occasionally to simulate a massive catalog
         const variation = i % 5 === 0 ? ` V${Math.floor(Math.random() * 10) + 2}` : ''
-        
+
         const docRef = doc(collection(db, 'products'))
         batch.set(docRef, {
           retailHeading: `${base.retailHeading}${variation}`,
@@ -194,7 +194,7 @@ export default function Seeder() {
             <p className="text-white/60 text-sm mb-8">
               This will instantly inject <strong>200 products</strong> into your Firebase database. Each product will have multiple unique photos automatically assigned, with zero lag or slowdown.
             </p>
-            
+
             {error && <p className="text-red-400 text-sm font-bold bg-red-500/10 rounded-xl p-4 mb-6">{error}</p>}
 
             <button

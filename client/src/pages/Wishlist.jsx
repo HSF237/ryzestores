@@ -38,7 +38,7 @@ export default function Wishlist() {
               </h1>
             </div>
             <p className="text-white/40 font-jakarta text-sm sm:text-base max-w-lg">
-              Curate your elite collection. Secure your favorites before they disappear from the marketplace.
+              Curate your ryze collection. Secure your favorites before they disappear from the marketplace.
             </p>
           </div>
           <div className="glass px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-4">
@@ -117,11 +117,11 @@ export default function Wishlist() {
                         </div>
                         <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">Premium Choice</span>
                       </div>
-                      
+
                       <h3 className="font-outfit font-bold text-lg text-white mb-2 leading-tight">
                         {product.retailHeading || product.name || product.title}
                       </h3>
-                      
+
                       <div className="mt-auto flex items-center justify-between">
                         <span className="text-xl font-outfit font-black text-[#c9a962]">
                           ₹{price.toLocaleString()}

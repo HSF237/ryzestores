@@ -47,16 +47,16 @@ function cartReducer(state, action) {
 
 export function CartProvider({ children }) {
   const { user } = useAuth()
-  const [state, dispatch] = useReducer(cartReducer, { 
+  const [state, dispatch] = useReducer(cartReducer, {
     items: (() => {
       try {
-        const local = localStorage.getItem('elite_cart')
+        const local = localStorage.getItem('ryze_cart')
         return local ? JSON.parse(local) : []
       } catch (e) {
         return []
       }
-    })(), 
-    isOpen: false 
+    })(),
+    isOpen: false
   })
   const [hasFetched, setHasFetched] = useState(false)
   const prevUserRef = useRef(null)
@@ -93,7 +93,7 @@ export function CartProvider({ children }) {
 
   // 2. Persist to LocalStorage
   useEffect(() => {
-    localStorage.setItem('elite_cart', JSON.stringify(state.items))
+    localStorage.setItem('ryze_cart', JSON.stringify(state.items))
   }, [state.items])
 
   // 3. Sync TO Firebase on Change
@@ -106,7 +106,7 @@ export function CartProvider({ children }) {
       size: i.size,
       color: i.color
     }))
-    
+
     userService.updateCart(cartData)
       .catch(err => console.error('Failed to update remote cart', err))
   }, [state.items, user, hasFetched])

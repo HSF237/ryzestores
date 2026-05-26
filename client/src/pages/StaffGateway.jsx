@@ -65,7 +65,7 @@ export default function StaffGateway() {
                 onChange={e => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#c9a962]/50 transition-all"
-                placeholder="staff@elitestore.com"
+                placeholder="staff@ryzestore.com"
               />
             </div>
 

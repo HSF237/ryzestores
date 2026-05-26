@@ -23,8 +23,8 @@ export default function CustomerManager() {
     fetchUsers()
   }, [])
 
-  const filteredUsers = users.filter(u => 
-    u.name.toLowerCase().includes(search.toLowerCase()) || 
+  const filteredUsers = users.filter(u =>
+    u.name.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase())
   )
 
@@ -39,14 +39,14 @@ export default function CustomerManager() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <h2 className="text-4xl font-outfit font-black uppercase tracking-tighter mb-2">Customer Base</h2>
-          <p className="text-white/40 text-sm font-medium">Manage and view all registered elite members.</p>
+          <p className="text-white/40 text-sm font-medium">Manage and view all registered ryze members.</p>
         </div>
-        
+
         <div className="relative max-w-sm w-full">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-          <input 
-            type="text" 
-            placeholder="Search by name or email..." 
+          <input
+            type="text"
+            placeholder="Search by name or email..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-3 text-sm outline-none focus:border-[#c9a962]/50 transition-all font-medium"
@@ -72,7 +72,7 @@ export default function CustomerManager() {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {filteredUsers.length > 0 ? filteredUsers.map((u, idx) => (
-                  <motion.tr 
+                  <motion.tr
                     key={u._id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -94,11 +94,10 @@ export default function CustomerManager() {
                       </div>
                     </td>
                     <td className="px-8 py-5">
-                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                        u.role === 'admin' 
-                        ? 'bg-[#c9a962]/10 text-[#c9a962] border border-[#c9a962]/20' 
-                        : 'bg-white/5 text-white/40 border border-white/10'
-                      }`}>
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${u.role === 'admin'
+                          ? 'bg-[#c9a962]/10 text-[#c9a962] border border-[#c9a962]/20'
+                          : 'bg-white/5 text-white/40 border border-white/10'
+                        }`}>
                         {u.role === 'admin' ? <ShieldCheck className="w-3 h-3" /> : <ShieldAlert className="w-3 h-3 opacity-30" />}
                         {u.role}
                       </div>

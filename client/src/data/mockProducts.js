@@ -4,7 +4,7 @@ export const HERO_SLIDES = [
     id: 'h1',
     image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=70&w=1600',
     title: 'SCIENCE IN MOTION',
-    subtitle: 'ELITE PERFORMANCE TECH',
+    subtitle: 'ryze PERFORMANCE TECH',
     cta: 'Explore Future',
     accent: '#c9a962'
   },
@@ -28,7 +28,7 @@ export const CATEGORIES = [
   { id: 'fitness', label: 'Fitness', slug: 'Sports', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=60&w=400' },
 ]
 
-export const ELITE_DROPS = [
+export const ryze_DROPS = [
   {
     id: 'p1',
     retailHeading: 'Phantom Precision Sneakers',
@@ -59,7 +59,7 @@ export const ELITE_DROPS = [
   },
   {
     id: 'p3',
-    retailHeading: 'Elite Monarch Timepiece',
+    retailHeading: 'ryze Monarch Timepiece',
     longDescription: 'Precision movement housed in a surgical-grade steel casing with sapphire glass.',
     regularPrice: 42000,
     discountPrice: 38500,

@@ -62,7 +62,7 @@ export default function Navbar() {
                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#c9a962] rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-[#c9a962]/20">
                   <Gem className="w-5 h-5 text-black" />
                </div>
-               <span className="hidden lg:inline">ELITE<span className="text-[#c9a962]">STORE</span></span>
+               <span className="hidden lg:inline">RY<span className="text-[#c9a962]">ZE</span></span>
              </Link>
 
              {/* Location Pulse (Desktop Only) */}
@@ -89,7 +89,7 @@ export default function Navbar() {
                 </div>
                 <input 
                   type="text" 
-                  placeholder="Elite Search Protocol..."
+                  placeholder="Search RYZE..."
                   className="flex-1 bg-transparent px-2 text-xs font-medium text-white focus:outline-none placeholder:text-white/20"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}

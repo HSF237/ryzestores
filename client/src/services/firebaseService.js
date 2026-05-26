@@ -406,7 +406,7 @@ export const orderService = {
     const u = auth.currentUser
     if (!u) throw new Error('Not authenticated')
 
-    const orderCode = 'ELT-' + Math.random().toString(36).toUpperCase().substring(2, 10)
+    const orderCode = 'RYZ-' + Math.random().toString(36).toUpperCase().substring(2, 10)
 
     const order = {
       customer: u.uid,
@@ -427,7 +427,7 @@ export const orderService = {
       orderCode,
       trackingHistory: [{
         status: 'Order Placed',
-        location: 'Elite Engine System',
+        location: 'RYZE System',
         description: 'Your mandate has been successfully logged.',
         date: new Date().toISOString()
       }],

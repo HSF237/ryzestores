@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --elite-bg: #0a0a0b;
-  --elite-surface: rgba(255, 255, 255, 0.05);
-  --elite-border: rgba(255, 255, 255, 0.08);
-  --elite-gold: #c9a962;
-  --elite-gold-dim: rgba(201, 169, 98, 0.4);
+  --ryze-bg: #0a0a0b;
+  --ryze-surface: rgba(255, 255, 255, 0.05);
+  --ryze-border: rgba(255, 255, 255, 0.08);
+  --ryze-gold: #c9a962;
+  --ryze-gold-dim: rgba(201, 169, 98, 0.4);
 }
 
 * {
@@ -22,13 +22,18 @@ html {
 
 body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  background: var(--elite-bg);
+  background: var(--ryze-bg);
   color: #fafafa;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Outfit', system-ui, sans-serif;
 }
 
@@ -51,8 +56,8 @@ h1, h2, h3, h4, h5, h6 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-

@@ -7,7 +7,7 @@ import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import QuickViewModal from '../components/QuickViewModal'
 import OptimizedImage from '../components/OptimizedImage'
-import { HERO_SLIDES, CATEGORIES, ELITE_DROPS } from '../data/mockProducts'
+import { HERO_SLIDES, CATEGORIES, ryze_DROPS } from '../data/mockProducts'
 import { getRecentlyViewed } from '../utils/recentViewed'
 
 const container = {
@@ -60,7 +60,7 @@ export default function Home() {
   useEffect(() => {
     productService.getProducts({ limit: 5 })
       .then(res => {
-        setProducts(res.products?.length > 0 ? res.products : ELITE_DROPS.slice(0, 5))
+        setProducts(res.products?.length > 0 ? res.products : ryze_DROPS.slice(0, 5))
         setLoading(false)
       })
       .catch(err => {
@@ -86,9 +86,9 @@ export default function Home() {
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="whitespace-nowrap flex gap-12 font-black text-[10px] uppercase tracking-[0.3em]"
         >
-          <span>✨ Flash Sale Live: Up to 70% Off Elite Tech</span>
+          <span>✨ Flash Sale Live: Up to 70% Off ryze Tech</span>
           <span>🚀 Free Express Shipping on all orders above ₹4,999</span>
-          <span>💎 New Membership Program Launched: Join Elite Club Now</span>
+          <span>💎 New Membership Program Launched: Join ryze Club Now</span>
           <span>⚡ Next Drop: Phantom Watch V2 in 04:12:00</span>
         </motion.div>
       </div>
@@ -173,14 +173,14 @@ export default function Home() {
           ))}
         </div>
       </section>
-      
+
       {/* ——— Amazon-Style Category Navigator ——— */}
       <section className="py-8 bg-[#0d0d0f] border-b border-white/5 relative z-40">
         <div className="max-w-7xl mx-auto px-4 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-6 sm:gap-12 min-w-max pb-2">
             {CATEGORIES.map((cat) => (
-              <motion.div 
-                key={cat.id} 
+              <motion.div
+                key={cat.id}
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex flex-col items-center gap-3 group cursor-pointer"
@@ -188,13 +188,13 @@ export default function Home() {
               >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 bg-gradient-to-tr from-[#c9a962]/50 to-transparent group-hover:from-[#c9a962] transition-all duration-500 shadow-xl">
                   <div className="w-full h-full rounded-full overflow-hidden border-2 border-[#111113] bg-[#1a1a1c]">
-                    <OptimizedImage 
-                      src={cat.image} 
-                      alt={cat.label} 
-                      width={160} 
-                      quality={70} 
-                      wrapperClassName="w-full h-full" 
-                      className="group-hover:scale-110 transition-transform duration-700 object-cover" 
+                    <OptimizedImage
+                      src={cat.image}
+                      alt={cat.label}
+                      width={160}
+                      quality={70}
+                      wrapperClassName="w-full h-full"
+                      className="group-hover:scale-110 transition-transform duration-700 object-cover"
                     />
                   </div>
                 </div>
@@ -218,8 +218,8 @@ export default function Home() {
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#c9a962]/10 blur-3xl -mr-16 -mt-16" />
             <div className="mb-4">
-               <h3 className="font-outfit font-black text-lg sm:text-2xl mb-1 text-white uppercase tracking-tighter">Today's Deals</h3>
-               <p className="text-[8px] sm:text-[10px] text-[#c9a962] mb-4 font-black uppercase tracking-[0.2em]">Under ₹999 Essentials</p>
+              <h3 className="font-outfit font-black text-lg sm:text-2xl mb-1 text-white uppercase tracking-tighter">Today's Deals</h3>
+              <p className="text-[8px] sm:text-[10px] text-[#c9a962] mb-4 font-black uppercase tracking-[0.2em]">Under ₹999 Essentials</p>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-3 flex-1">
               {[
@@ -256,7 +256,7 @@ export default function Home() {
             className="bg-[#1a1a1c] p-6 rounded-[2.5rem] border border-white/5 flex flex-col group cursor-pointer hover:border-[#c9a962]/30 transition-all shadow-2xl"
             onClick={() => navigate('/shop?category=Home')}
           >
-            <h3 className="font-outfit font-black text-base sm:text-lg mb-0.5 text-white uppercase tracking-tighter">Elite Spaces</h3>
+            <h3 className="font-outfit font-black text-base sm:text-lg mb-0.5 text-white uppercase tracking-tighter">ryze Spaces</h3>
             <p className="text-[7px] sm:text-[9px] text-[#c9a962] mb-3 font-black uppercase tracking-[0.2em]">Smart Interior</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-3 flex-1">
               {[
@@ -320,7 +320,7 @@ export default function Home() {
             className="bg-gradient-to-br from-[#c9a962] to-[#b09452] p-8 rounded-[2.5rem] flex flex-col justify-between"
           >
             <div>
-              <h3 className="font-outfit font-black text-lg sm:text-xl text-black leading-none mb-2 uppercase tracking-tighter">Your Elite Profile</h3>
+              <h3 className="font-outfit font-black text-lg sm:text-xl text-black leading-none mb-2 uppercase tracking-tighter">Your ryze Profile</h3>
               <p className="text-[8px] sm:text-[10px] text-black/70 font-bold uppercase tracking-wide">Sign in for exclusive drops and faster checkout.</p>
             </div>
             <div className="space-y-3">
@@ -358,12 +358,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ——— Elite Drops Product Grid ——— */}
+      {/* ——— ryze Drops Product Grid ——— */}
       <section className="py-8 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6 sm:mb-8">
             <div>
-              <h2 className="font-outfit font-black text-xl sm:text-2xl text-white uppercase tracking-tighter">Elite Drops</h2>
+              <h2 className="font-outfit font-black text-xl sm:text-2xl text-white uppercase tracking-tighter">ryze Drops</h2>
               <p className="text-[8px] sm:text-[9px] text-[#c9a962] font-black tracking-[0.2em] sm:tracking-[0.4em] uppercase mt-1">Newest arrivals</p>
             </div>
           </div>
@@ -386,13 +386,13 @@ export default function Home() {
                 >
                   <div className="bg-white/[0.02] rounded-2xl overflow-hidden border border-white/5 group-hover:border-[#c9a962]/30 transition-all flex flex-col h-full shadow-lg relative">
                     <div className="aspect-square relative overflow-hidden">
-                      <OptimizedImage 
-                        src={product.images?.[0] || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400'} 
+                      <OptimizedImage
+                        src={product.images?.[0] || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400'}
                         alt={product.retailHeading}
                         width={400}
                         quality={70}
                         wrapperClassName="w-full h-full"
-                        className="group-hover:scale-110 transition-transform duration-700" 
+                        className="group-hover:scale-110 transition-transform duration-700"
                       />
                       {/* Wishlist Heart */}
                       <button
@@ -402,31 +402,31 @@ export default function Home() {
                         <Heart className={`w-4 h-4 ${isLiked(product._id || product.id) ? 'fill-red-500 text-red-500' : ''}`} />
                       </button>
                       <button
-                         onClick={e => { 
-                           e.stopPropagation(); 
-                           setQuickViewProduct(product);
-                         }}
-                         className="absolute bottom-1 right-1 w-7 h-7 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
+                        onClick={e => {
+                          e.stopPropagation();
+                          setQuickViewProduct(product);
+                        }}
+                        className="absolute bottom-1 right-1 w-7 h-7 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
                       >
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                       </button>
                     </div>
 
                     <div className="p-2.5 sm:p-4 flex flex-col flex-1">
                       <h4 className="text-white font-bold text-xs sm:text-sm leading-tight line-clamp-2 mb-1 group-hover:text-[#c9a962] transition-colors">{product.retailHeading}</h4>
                       <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-2">{product.category}</p>
-                      
+
                       <div className="mt-auto flex items-baseline gap-2">
                         {product.regularPrice > product.discountPrice && (
                           <span className="bg-[#cc0c39] text-white font-bold text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded shadow-sm">
-                             -{Math.round(((product.regularPrice - product.discountPrice)/product.regularPrice)*100)}%
+                            -{Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)}%
                           </span>
                         )}
                         <span className="text-sm sm:text-xl font-outfit font-black text-white tracking-tighter">
-                           <span className="text-[10px] sm:text-xs mr-0.5">₹</span>{product.discountPrice?.toLocaleString()}
+                          <span className="text-[10px] sm:text-xs mr-0.5">₹</span>{product.discountPrice?.toLocaleString()}
                         </span>
                       </div>
-                      <p className="text-white/40 text-[9px] font-bold mt-1">{Math.floor(Math.random()*200)+50}+ bought in past month</p>
+                      <p className="text-white/40 text-[9px] font-bold mt-1">{Math.floor(Math.random() * 200) + 50}+ bought in past month</p>
                     </div>
                   </div>
                 </motion.div>
@@ -435,15 +435,15 @@ export default function Home() {
           </div>
 
           <div className="mt-8 flex justify-center">
-             <button 
-                onClick={() => navigate('/shop')}
-                className="group relative px-8 py-3 bg-[#c9a962] rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-[#c9a962]/20"
-             >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                <span className="relative font-outfit font-black text-black text-[10px] sm:text-xs uppercase tracking-[0.2em] flex items-center gap-2">
-                   Explore Marketplace <ChevronRight className="w-4 h-4" />
-                </span>
-             </button>
+            <button
+              onClick={() => navigate('/shop')}
+              className="group relative px-8 py-3 bg-[#c9a962] rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-[#c9a962]/20"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              <span className="relative font-outfit font-black text-black text-[10px] sm:text-xs uppercase tracking-[0.2em] flex items-center gap-2">
+                Explore Marketplace <ChevronRight className="w-4 h-4" />
+              </span>
+            </button>
           </div>
         </div>
       </section>
@@ -458,7 +458,7 @@ export default function Home() {
                 <p className="text-[8px] text-[#c9a962] font-black tracking-[0.4em] uppercase mt-1">Pick up right where you left off</p>
               </div>
               <button
-                onClick={() => localStorage.removeItem('elite_recently_viewed')}
+                onClick={() => localStorage.removeItem('ryze_recently_viewed')}
                 className="text-[10px] font-black uppercase text-white/20 hover:text-red-500 transition-colors"
               >
                 Clear History
@@ -479,10 +479,10 @@ export default function Home() {
                     <div className="aspect-square relative overflow-hidden">
                       <OptimizedImage src={product.images?.[0] || product.image || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400'} width={400} quality={70} wrapperClassName="w-full h-full" className="group-hover:scale-110 transition-transform duration-700" />
                       <button
-                         onClick={e => { e.stopPropagation(); setQuickViewProduct(product); }}
-                         className="absolute bottom-2 right-2 w-8 h-8 sm:w-10 sm:h-10 bg-white/10 hover:bg-[#c9a962] text-white hover:text-black rounded-full flex items-center justify-center shadow-lg transition-all z-20 backdrop-blur-md"
+                        onClick={e => { e.stopPropagation(); setQuickViewProduct(product); }}
+                        className="absolute bottom-2 right-2 w-8 h-8 sm:w-10 sm:h-10 bg-white/10 hover:bg-[#c9a962] text-white hover:text-black rounded-full flex items-center justify-center shadow-lg transition-all z-20 backdrop-blur-md"
                       >
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                       </button>
                     </div>
                     <div className="p-2.5 sm:p-4 flex-1 flex flex-col">
@@ -518,11 +518,11 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ——— Elite Trust Section ——— */}
+      {/* ——— ryze Trust Section ——— */}
       <section className="py-12 px-4 bg-white/[0.01]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: 'Elite Quality', desc: 'Hand-picked luxury items vetted by global experts.', icon: '💎' },
+            { title: 'ryze Quality', desc: 'Hand-picked luxury items vetted by global experts.', icon: '💎' },
             { title: 'Secure Vault', desc: 'Encrypted end-to-end payments with 24/7 protection.', icon: '🛡️' },
             { title: 'Priority Drop', desc: 'Fastest delivery engine in the luxury segment.', icon: '🚀' },
           ].map((trust, i) => (

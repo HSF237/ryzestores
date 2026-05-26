@@ -45,11 +45,11 @@ export default function Signup() {
           <div className="w-9 h-9 bg-[#c9a962] rounded-xl flex items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-black" />
           </div>
-          <span className="font-outfit font-black text-2xl text-white">ELITE<span className="text-[#c9a962]">STORE</span></span>
+          <span className="font-outfit font-black text-2xl text-white">RY<span className="text-[#c9a962]">ZE</span></span>
         </Link>
 
         <div className="bg-[#111113] rounded-3xl border border-white/10 p-8 shadow-2xl shadow-black/50">
-          <h1 className="font-outfit font-black text-2xl text-white mb-1">Join Elite Store</h1>
+          <h1 className="font-outfit font-black text-2xl text-white mb-1">Join RYZE</h1>
           <p className="text-white/40 text-sm mb-8">Create your account for free.</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">

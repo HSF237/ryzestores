@@ -5,11 +5,11 @@ import { Filter, ChevronDown, Star, Heart, ShoppingBag, X, Search, SlidersHorizo
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { productService } from '../services/firebaseService'
-import { ELITE_DROPS } from '../data/mockProducts'
+import { ryze_DROPS } from '../data/mockProducts'
 import QuickViewModal from '../components/QuickViewModal'
 import OptimizedImage from '../components/OptimizedImage'
 
-const BRANDS = ['Elite Collection', 'Aura Luxury', 'Phantom Tech', 'Luxe Wear', 'Precision']
+const BRANDS = ['ryze Collection', 'Aura Luxury', 'Phantom Tech', 'Luxe Wear', 'Precision']
 const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', '8', '9', '10', '11']
 const ALL_CATEGORIES = ['All', 'Footwear', 'Apparel', 'Electronics', 'Beauty', 'Accessories']
 const SORT_OPTIONS = [
@@ -56,7 +56,7 @@ export default function Shop() {
   const [sortBy, setSortBy] = useState('featured')
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
   // Filters state
   const [priceMax, setPriceMax] = useState(100000)
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All')
@@ -76,7 +76,7 @@ export default function Shop() {
     const q = searchParams.get('q') || ''
     const cat = searchParams.get('category') || 'All'
     const deals = searchParams.get('filter') === 'deals'
-    
+
     setSearchQuery(q)
     setSelectedCategory(cat)
     setIsDealsOnly(deals)
@@ -86,7 +86,7 @@ export default function Shop() {
   useEffect(() => {
     productService.getProducts({ limit: 100 })
       .then(res => {
-        setProducts(res.products?.length > 0 ? res.products : ELITE_DROPS)
+        setProducts(res.products?.length > 0 ? res.products : ryze_DROPS)
         setLoading(false)
       })
       .catch(err => {
@@ -108,18 +108,18 @@ export default function Shop() {
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase()
-      result = result.filter(p => 
-        p.retailHeading?.toLowerCase().includes(q) || 
+      result = result.filter(p =>
+        p.retailHeading?.toLowerCase().includes(q) ||
         p.searchKeywords?.some(k => k.toLowerCase().includes(q))
       )
     }
     if (selectedCategory !== 'All') {
-      result = result.filter(p => 
-        p.category?.toLowerCase() === selectedCategory.toLowerCase() || 
+      result = result.filter(p =>
+        p.category?.toLowerCase() === selectedCategory.toLowerCase() ||
         p.department?.toLowerCase() === selectedCategory.toLowerCase()
       )
     }
-    
+
     if (isDealsOnly) {
       result = result.filter(p => p.regularPrice > p.discountPrice)
     }
@@ -160,11 +160,11 @@ export default function Shop() {
         </div>
       )}
 
-      {/* Elite Fast Delivery Toggle */}
-      <FilterSection title="Elite Prime">
+      {/* ryze Fast Delivery Toggle */}
+      <FilterSection title="ryze Prime">
         <label className="flex items-center justify-between cursor-pointer group">
           <div>
-            <p className="text-sm font-bold text-white/80">Elite Fast Delivery</p>
+            <p className="text-sm font-bold text-white/80">ryze Fast Delivery</p>
             <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">FREE delivery only</p>
           </div>
           <div
@@ -285,10 +285,10 @@ export default function Shop() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/5">
           <div>
             <h1 className="font-outfit font-black text-3xl sm:text-4xl text-white uppercase tracking-tighter">
-              Elite <span className="text-[#c9a962]">Marketplace</span>
+              ryze <span className="text-[#c9a962]">Marketplace</span>
             </h1>
             <p className="text-sm text-white/30 font-medium mt-1">
-              <span className="text-[#c9a962] font-bold">{filtered.length}</span> results from Elite Collection
+              <span className="text-[#c9a962] font-bold">{filtered.length}</span> results from ryze Collection
             </p>
           </div>
 
@@ -340,14 +340,14 @@ export default function Shop() {
           <main className="flex-1 min-w-0">
             {/* Quick Horizontal Filters (Amazon mobile style) */}
             <div className="flex lg:hidden items-center gap-2 overflow-x-auto no-scrollbar pb-4 mb-4 border-b border-white/5 whitespace-nowrap">
-              <button 
+              <button
                 onClick={() => setFreeDelivery(!freeDelivery)}
                 className={`flex-shrink-0 px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all ${freeDelivery ? 'bg-white/10 text-white border-white/40' : 'bg-transparent text-white/50 border-white/10'}`}
               >
                 ✓ Prime
               </button>
               {ALL_CATEGORIES.map(cat => (
-                <button 
+                <button
                   key={cat}
                   onClick={() => setSelectedCategory(selectedCategory === cat ? 'All' : cat)}
                   className={`flex-shrink-0 px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all ${selectedCategory === cat ? 'bg-white/10 text-[#c9a962] border-[#c9a962]/40' : 'bg-transparent text-white/60 border-white/10'}`}
@@ -357,10 +357,10 @@ export default function Shop() {
               ))}
               <div className="w-px h-6 bg-white/10 mx-2 flex-shrink-0" />
               <button onClick={() => setPriceMax(15000)} className="flex-shrink-0 px-4 py-2 border rounded-full bg-transparent border-white/10 text-xs font-bold text-white/60">
-                 Under ₹15k
+                Under ₹15k
               </button>
               <button onClick={() => setMinRating(4)} className="flex-shrink-0 px-4 py-2 border rounded-full bg-transparent border-white/10 text-xs font-bold text-white/60">
-                 4★ & Up
+                4★ & Up
               </button>
             </div>
             {loading ? (
@@ -419,7 +419,7 @@ export default function Shop() {
                           {/* Badges */}
                           {discount >= 20 && (
                             <div className="absolute top-4 left-0 bg-[#c9a962] text-black text-[9px] font-black px-3 py-1 uppercase tracking-widest rounded-r-full shadow-lg">
-                              Elite Deal -{discount}%
+                              ryze Deal -{discount}%
                             </div>
                           )}
                           {product.deliveryCharge === 0 && (
@@ -433,25 +433,25 @@ export default function Shop() {
 
                           {/* Quick Add Button (Amazon style) */}
                           <div className="absolute bottom-2 right-2 flex items-center justify-center z-10 hidden sm:flex">
-                             {/* Keep hidden on desktop to not clash with Size Quick Select, but reveal on mobile! Wait! We actually just render it everywhere for the Amazon vibe. */}
-                           <button
-                             onClick={e => { 
-                               e.stopPropagation(); 
-                               addToCart({
-                                 ...product, 
-                                 id: product._id||product.id, 
-                                 title: product.retailHeading, 
-                                 price: product.discountPrice??product.regularPrice, 
-                                 size: product.sizes?.[0]||'One Size', 
-                                 color: product.colors?.[0]?.name||'Default', 
-                                 qty: 1, 
-                                 image: product.images?.[0]||product.image
-                               }); 
-                             }}
-                             className="absolute bottom-1.5 right-1.5 w-7 h-7 sm:w-8 sm:h-8 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
-                          >
-                             <Plus className="w-4 h-4 font-black" />
-                          </button>
+                            {/* Keep hidden on desktop to not clash with Size Quick Select, but reveal on mobile! Wait! We actually just render it everywhere for the Amazon vibe. */}
+                            <button
+                              onClick={e => {
+                                e.stopPropagation();
+                                addToCart({
+                                  ...product,
+                                  id: product._id || product.id,
+                                  title: product.retailHeading,
+                                  price: product.discountPrice ?? product.regularPrice,
+                                  size: product.sizes?.[0] || 'One Size',
+                                  color: product.colors?.[0]?.name || 'Default',
+                                  qty: 1,
+                                  image: product.images?.[0] || product.image
+                                });
+                              }}
+                              className="absolute bottom-1.5 right-1.5 w-7 h-7 sm:w-8 sm:h-8 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
+                            >
+                              <Plus className="w-4 h-4 font-black" />
+                            </button>
                           </div>
 
                           {/* Action Buttons */}
@@ -487,33 +487,33 @@ export default function Shop() {
                               {product.retailHeading}
                             </h3>
                             <div className="flex items-center gap-1 my-1">
-                               <div className="flex text-[#c9a962]">
-                                  {[...Array(5)].map((_, i) => {
-                                    const r = product.rating || 0
-                                    return <Star key={i} className={`w-3 h-3 ${i < Math.floor(r) ? 'fill-current' : i < r ? 'fill-current opacity-50' : 'text-white/20'}`} />
-                                  })}
-                               </div>
-                               <span className="text-white/60 text-[9px] font-bold">{product.rating ? Number(product.rating).toFixed(1) : '—'}</span>
-                               {product.reviews > 0 && <span className="text-white/30 text-[9px] font-bold">({product.reviews})</span>}
-                               {product.ordersCount > 0 && <span className="text-white/30 text-[9px] font-bold ml-1">· {product.ordersCount.toLocaleString()} bought</span>}
+                              <div className="flex text-[#c9a962]">
+                                {[...Array(5)].map((_, i) => {
+                                  const r = product.rating || 0
+                                  return <Star key={i} className={`w-3 h-3 ${i < Math.floor(r) ? 'fill-current' : i < r ? 'fill-current opacity-50' : 'text-white/20'}`} />
+                                })}
+                              </div>
+                              <span className="text-white/60 text-[9px] font-bold">{product.rating ? Number(product.rating).toFixed(1) : '—'}</span>
+                              {product.reviews > 0 && <span className="text-white/30 text-[9px] font-bold">({product.reviews})</span>}
+                              {product.ordersCount > 0 && <span className="text-white/30 text-[9px] font-bold ml-1">· {product.ordersCount.toLocaleString()} bought</span>}
                             </div>
                           </div>
 
                           <div className="mt-auto pt-1 flex items-baseline gap-1 flex-wrap">
-                             {discount > 0 && (
-                                <span className="bg-[#cc0c39] text-white font-bold text-[8px] sm:text-[9px] px-1 py-0.5 rounded shadow-sm">
-                                   -{discount}%
-                                </span>
-                             )}
+                            {discount > 0 && (
+                              <span className="bg-[#cc0c39] text-white font-bold text-[8px] sm:text-[9px] px-1 py-0.5 rounded shadow-sm">
+                                -{discount}%
+                              </span>
+                            )}
                             <span className="text-base sm:text-lg font-outfit font-black text-white tracking-tighter shadow-sm flex items-baseline">
-                               <span className="text-[9px] sm:text-xs mr-0.5 leading-none">₹</span>{price.toLocaleString()}
+                              <span className="text-[9px] sm:text-xs mr-0.5 leading-none">₹</span>{price.toLocaleString()}
                             </span>
                             {product.regularPrice > product.discountPrice && (
                               <span className="text-[9px] sm:text-[10px] text-white/40 font-bold line-through ml-1 leading-none">₹{product.regularPrice.toLocaleString()}</span>
                             )}
                           </div>
                           {product.deliveryCharge === 0 && (
-                             <p className="text-[#00a8e1] text-[9px] font-bold flex items-center mt-1">✓ <span className="text-white font-black italic tracking-tight mx-1">prime</span> FREE Delivery by Tomorrow</p>
+                            <p className="text-[#00a8e1] text-[9px] font-bold flex items-center mt-1">✓ <span className="text-white font-black italic tracking-tight mx-1">prime</span> FREE Delivery by Tomorrow</p>
                           )}
                         </div>
                       </motion.article>

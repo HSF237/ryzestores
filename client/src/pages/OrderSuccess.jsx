@@ -38,9 +38,9 @@ export default function OrderSuccess() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] flex flex-col items-center justify-center px-6 pt-20">
-      
+
       <div className="relative mb-12">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', damping: 12, stiffness: 200 }}
@@ -48,8 +48,8 @@ export default function OrderSuccess() {
         >
           <CheckCircle className="w-16 h-16 text-white" />
         </motion.div>
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             scale: [1, 1.2, 1],
             opacity: [0.5, 0, 0.5]
           }}
@@ -57,12 +57,12 @@ export default function OrderSuccess() {
           className="absolute inset-0 rounded-full bg-green-500/20"
         />
         <div className="absolute -top-4 -right-4">
-           <Sparkles className="w-8 h-8 text-[#c9a962] animate-bounce" />
+          <Sparkles className="w-8 h-8 text-[#c9a962] animate-bounce" />
         </div>
       </div>
 
       <div className="text-center max-w-xl">
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -70,7 +70,7 @@ export default function OrderSuccess() {
         >
           Transaction Successful
         </motion.p>
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -78,14 +78,14 @@ export default function OrderSuccess() {
         >
           ORDER PLACED
         </motion.h1>
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
           className="text-white/40 font-medium text-sm mb-12 px-8"
         >
-          Your order <span className="text-white font-bold">#{order.orderCode}</span> has been confirmed. 
-          Our elite team is now preparing your items for a premium delivery experience.
+          Your order <span className="text-white font-bold">#{order.orderCode}</span> has been confirmed.
+          Our ryze team is now preparing your items for a premium delivery experience.
         </motion.p>
       </div>
 
@@ -95,7 +95,7 @@ export default function OrderSuccess() {
           { icon: <Truck />, label: 'Delivery', val: 'Processing' },
           { icon: <ShoppingBag />, label: 'Items', val: order.items.length + ' Premium Goods' }
         ].map((stat, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -112,13 +112,13 @@ export default function OrderSuccess() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-        <Link 
-          to="/shop" 
+        <Link
+          to="/shop"
           className="flex-1 h-16 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-[#c9a962] transition-all"
         >
           <ShoppingBag className="w-4 h-4" /> Continue Shopping
         </Link>
-        <button 
+        <button
           onClick={() => navigate('/profile', { state: { tab: 'orders' } })}
           className="flex-1 h-16 border border-white/10 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-white/5 transition-all"
         >
