@@ -2,7 +2,7 @@
  * Firebase Service Layer — replaces all Express/MongoDB API calls
  * This module provides the same data contracts the React components expect
  */
-import { auth, db, storage } from '../config/firebase'
+import { auth, db } from '../config/firebase'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,9 +17,6 @@ import {
   deleteDoc, query, where, orderBy, limit, serverTimestamp,
   increment as firestoreIncrement, writeBatch
 } from 'firebase/firestore'
-import {
-  ref, uploadBytes, getDownloadURL
-} from 'firebase/storage'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // AUTH SERVICE
