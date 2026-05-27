@@ -44,10 +44,16 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
+  const googleSignIn = useCallback(async () => {
+    const result = await authService.googleSignIn()
+    setUser(result.user)
+    return result.user
+  }, [])
+
   const isStaff = user?.role === 'staff' || user?.role === 'admin'
 
   return (
-    <AuthContext.Provider value={{ user, isStaff, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isStaff, loading, login, signup, logout, googleSignIn }}>
       {children}
     </AuthContext.Provider>
   )

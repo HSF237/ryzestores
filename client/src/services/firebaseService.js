@@ -8,7 +8,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile as fbUpdateProfile
+  updateProfile as fbUpdateProfile,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth'
 import {
   collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc,
@@ -79,6 +81,39 @@ export const authService = {
   /** Auth state listener */
   onAuthChanged(callback) {
     return onAuthStateChanged(auth, callback)
+  },
+
+  /** Google Sign-In — works for both customers and staff */
+  async googleSignIn() {
+    const provider = new GoogleAuthProvider()
+    const cred = await signInWithPopup(auth, provider)
+    const userRef = doc(db, 'users', cred.user.uid)
+    const snap = await getDoc(userRef)
+
+    if (!snap.exists()) {
+      // First time — create Firestore profile
+      const userData = {
+        name: cred.user.displayName || '',
+        email: cred.user.email || '',
+        role: 'customer',
+        avatar: cred.user.photoURL || '',
+        phone: '',
+        age: null,
+        dob: '',
+        wishlist: [],
+        cart: [],
+        addresses: [],
+        createdAt: serverTimestamp()
+      }
+      await setDoc(userRef, userData)
+      return { token: await cred.user.getIdToken(), user: { _id: cred.user.uid, ...userData } }
+    }
+
+    // Existing user — fetch Firestore profile (may be staff/admin)
+    return {
+      token: await cred.user.getIdToken(),
+      user: { _id: cred.user.uid, ...snap.data() }
+    }
   },
 
   /** Get current Firebase user */
