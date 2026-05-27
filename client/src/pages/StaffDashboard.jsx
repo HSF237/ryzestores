@@ -7,6 +7,7 @@ import InventoryManager from '../components/InventoryManager'
 import CustomerManager from '../components/CustomerManager'
 import OrderManager from '../components/OrderManager'
 import AnalyticsDashboard from '../components/AnalyticsDashboard'
+import SalesAnalytics from '../components/SalesAnalytics'
 
 export default function StaffDashboard() {
    const navigate = useNavigate()
@@ -114,7 +115,8 @@ export default function StaffDashboard() {
 
             {/* Scrollable View Area */}
             <div className="flex-1 overflow-y-auto p-8 no-scrollbar bg-gradient-to-b from-white/[0.02] to-transparent">
-               {(activeTab === 'overview' || activeTab === 'sales') && <AnalyticsDashboard />}
+               {activeTab === 'overview' && <AnalyticsDashboard />}
+               {activeTab === 'sales' && <SalesAnalytics />}
                {activeTab === 'inventory' && <InventoryManager />}
                {activeTab === 'customers' && <CustomerManager />}
                {activeTab === 'orders' && <OrderManager />}
