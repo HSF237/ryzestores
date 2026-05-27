@@ -353,6 +353,8 @@ export const productService = {
       productVoucher: data.productVoucher || null,
       productVoucherDiscount: Number(data.productVoucherDiscount) || 0,
       searchKeywords,
+      customizable: data.customizable === true || data.customizable === 'true' || false,
+      customizationLabel: data.customizationLabel || '',
       rating: 4.5,
       reviews: 0,
       inStock: true,

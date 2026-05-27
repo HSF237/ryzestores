@@ -14,6 +14,7 @@ export default function QuickViewModal({ product, onClose }) {
   const [selectedColor, setSelectedColor] = useState(null)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
+  const [customizationText, setCustomizationText] = useState('')
 
   useEffect(() => {
     if (product) {
@@ -31,6 +32,7 @@ export default function QuickViewModal({ product, onClose }) {
     : 0
 
   const handleAddToCart = () => {
+    if (product.customizable && !customizationText.trim()) return
     addToCart({
       ...product,
       id: product._id || product.id,
@@ -39,6 +41,7 @@ export default function QuickViewModal({ product, onClose }) {
       image: images[0],
       size: selectedSize ?? product.sizes?.[0] ?? 'One Size',
       color: selectedColor?.name ?? product.colors?.[0]?.name ?? 'Default',
+      customization: customizationText.trim() || null,
     })
     setAdded(true)
     setTimeout(() => { setAdded(false); onClose() }, 1000)
@@ -233,11 +236,31 @@ export default function QuickViewModal({ product, onClose }) {
               </div>
             )}
 
+            {/* Customization Input */}
+            {product.customizable && (
+              <div className="space-y-2 bg-[#c9a962]/5 border border-[#c9a962]/20 rounded-2xl p-4">
+                <p className="text-[10px] font-black text-[#c9a962] uppercase tracking-widest">
+                  {product.customizationLabel || 'Enter Customization Details'}
+                </p>
+                <input
+                  type="text"
+                  placeholder="e.g. Ankit & Shivani"
+                  value={customizationText}
+                  onChange={e => setCustomizationText(e.target.value)}
+                  className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:border-[#c9a962]/50 focus:outline-none transition-all"
+                />
+                {!customizationText.trim() && (
+                  <p className="text-[9px] text-red-400/70 font-bold">Required before adding to bag</p>
+                )}
+              </div>
+            )}
+
             {/* CTA Buttons */}
             <div className="flex gap-3 sticky bottom-0 bg-[#111112]/95 backdrop-blur-md pt-4 pb-2 mt-auto md:relative md:bg-transparent md:pt-0">
               <motion.button
                 onClick={handleAddToCart}
-                className={`flex-1 h-14 sm:h-16 rounded-2xl font-outfit font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${added ? 'bg-green-500 text-white' : 'bg-[#c9a962] text-black hover:bg-[#b09452]'} shadow-[#c9a962]/20`}
+                disabled={product.customizable && !customizationText.trim()}
+                className={`flex-1 h-14 sm:h-16 rounded-2xl font-outfit font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${added ? 'bg-green-500 text-white' : 'bg-[#c9a962] text-black hover:bg-[#b09452]'} shadow-[#c9a962]/20 disabled:opacity-40 disabled:cursor-not-allowed`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >

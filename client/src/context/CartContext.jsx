@@ -13,7 +13,7 @@ function cartReducer(state, action) {
       return { ...state, items: action.payload }
     case 'ADD_ITEM': {
       const existing = state.items.find(
-        (i) => i.id === action.payload.id && i.size === action.payload.size && i.color === action.payload.color
+        (i) => i.id === action.payload.id && i.size === action.payload.size && i.color === action.payload.color && i.customization === action.payload.customization
       )
       if (existing) {
         return {

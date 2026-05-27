@@ -29,6 +29,8 @@ export default function InventoryManager() {
       productVoucher: '',
       productVoucherDiscount: '0',
       searchKeywords: '',
+      customizable: false,
+      customizationLabel: '',
    })
 
    useEffect(() => {
@@ -67,6 +69,8 @@ export default function InventoryManager() {
          productVoucher: product.productVoucher || '',
          productVoucherDiscount: product.productVoucherDiscount || '0',
          searchKeywords: (product.searchKeywords || []).join(', '),
+         customizable: product.customizable || false,
+         customizationLabel: product.customizationLabel || '',
       })
    }
 
@@ -91,6 +95,8 @@ export default function InventoryManager() {
          data.append('productVoucherDiscount', formData.productVoucherDiscount)
          data.append('taxRate', formData.taxRate)
          data.append('searchKeywords', formData.searchKeywords)
+         data.append('customizable', formData.customizable)
+         data.append('customizationLabel', formData.customizationLabel)
 
          const urls = [formData.imageUrl1, formData.imageUrl2, formData.imageUrl3, formData.imageUrl4].filter(u => u && u.startsWith('http'))
          urls.forEach(url => data.append('images', url))
@@ -108,7 +114,8 @@ export default function InventoryManager() {
             smallHeading: '', longDescription: '', category: 'Footwear', price: '',
             discountPrice: '', deliveryCharge: '0', sizes: [], colors: [],
             imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '',
-            taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: ''
+            taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '',
+            customizable: false, customizationLabel: ''
          })
          setImageFiles([null, null, null, null])
          fetchProducts()
@@ -152,7 +159,7 @@ export default function InventoryManager() {
                <p className="text-white/50 text-sm">Manage your store products like an Amazon Pro.</p>
             </div>
             <button
-               onClick={() => { setIsAdding(true); setIsEditing(false); setEditingId(null); setFormData({ smallHeading: '', longDescription: '', category: 'Footwear', price: '', discountPrice: '', deliveryCharge: '0', sizes: [], colors: [], imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '', taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '' }); }}
+               onClick={() => { setIsAdding(true); setIsEditing(false); setEditingId(null); setFormData({ smallHeading: '', longDescription: '', category: 'Footwear', price: '', discountPrice: '', deliveryCharge: '0', sizes: [], colors: [], imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '', taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '', customizable: false, customizationLabel: '' }); }}
                className="bg-[#c9a962] text-black font-black px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#b09452] transition-colors shadow-lg shadow-[#c9a962]/20"
             >
                <Plus className="w-5 h-5" /> Add New Product
@@ -468,6 +475,34 @@ export default function InventoryManager() {
                               onChange={e => setFormData({ ...formData, searchKeywords: e.target.value })}
                            />
                            <p className="text-[9px] text-white/20 font-bold uppercase italic text-center">Add misspellings or related terms to help customers find this product.</p>
+                        </div>
+
+                        {/* Section 7: Customization */}
+                        <div className="space-y-4 pb-4 border border-white/5 rounded-2xl p-5 bg-white/[0.02]">
+                           <div className="flex items-center justify-between">
+                              <label className="flex items-center gap-2 text-xs font-black text-[#c9a962] uppercase tracking-widest">
+                                 Customizable Product
+                              </label>
+                              <button
+                                 type="button"
+                                 onClick={() => setFormData({ ...formData, customizable: !formData.customizable })}
+                                 className={`w-12 h-6 rounded-full transition-all relative ${formData.customizable ? 'bg-[#c9a962]' : 'bg-white/10'}`}
+                              >
+                                 <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${formData.customizable ? 'left-6' : 'left-0.5'}`} />
+                              </button>
+                           </div>
+                           {formData.customizable && (
+                              <div className="space-y-2 pt-2">
+                                 <label className="text-[10px] font-black text-white/40 uppercase tracking-widest">Customization Prompt (shown to customer)</label>
+                                 <input
+                                    type="text"
+                                    placeholder="e.g. Enter both names (Name 1 & Name 2)"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-[#c9a962]/50 outline-none transition-all"
+                                    value={formData.customizationLabel}
+                                    onChange={e => setFormData({ ...formData, customizationLabel: e.target.value })}
+                                 />
+                              </div>
+                           )}
                         </div>
                      </div>
 

@@ -73,6 +73,9 @@ export default function CartSidebar() {
                           {item.color && <span>{item.color} </span>}
                           {item.size && <span> · {item.size}</span>}
                         </p>
+                        {item.customization && (
+                          <p className="text-[#c9a962]/70 text-[10px] font-bold mt-0.5 truncate">✏ {item.customization}</p>
+                        )}
                         <p className="text-[#c9a962] font-semibold mt-1">
                           ₹{((item.price ?? item.discountPrice ?? 0) * item.qty).toLocaleString()}
                         </p>
