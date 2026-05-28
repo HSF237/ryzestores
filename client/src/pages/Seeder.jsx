@@ -89,12 +89,168 @@ const BASE_PRODUCTS = [
   { retailHeading: 'Bamboo Zen Storage Box', category: 'Home', department: 'Organisation', regularPrice: 2999, discountPrice: 1999, taxRate: 18, imgs: 'home' },
 ]
 
+const DROPSHIP_PRODUCTS = [
+  {
+    retailHeading: 'RGB LED Strip Lights — Smart App Control',
+    longDescription: 'Transform your room instantly with vibrant RGB lighting. Supports 16 million colours, music sync mode, and app control via Bluetooth. Adhesive backing for easy wall mounting. Perfect for bedrooms, gaming setups, and study desks. Cut-to-length flexibility — works with any room size.',
+    category: 'Electronics',
+    department: 'Smart Home',
+    regularPrice: 599,
+    discountPrice: 449,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['led', 'rgb', 'room decor', 'smart lights', 'led strip', 'gaming room', 'neon'],
+    images: ['https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
+  },
+  {
+    retailHeading: '360° Magnetic Car & Desk Phone Holder',
+    longDescription: 'Universal magnetic mount with 360° rotation — works on car dashboards, desks, and bedside tables. Strong N52 magnet holds any phone securely without blocking ports. One-hand operation for easy attachment and removal. Sleek black design fits all interiors.',
+    category: 'Accessories',
+    department: 'Phone',
+    regularPrice: 399,
+    discountPrice: 299,
+    deliveryCharge: 0,
+    taxRate: 12,
+    searchKeywords: ['phone holder', 'car mount', 'magnetic', 'mobile stand', 'phone stand', 'car accessories'],
+    images: ['https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800', 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800'],
+  },
+  {
+    retailHeading: 'RYZE TWS Wireless Earbuds — 24Hr Battery',
+    longDescription: 'True wireless earbuds with deep bass and crystal-clear highs. 6hr playtime + 18hr charging case. Bluetooth 5.3 for instant pairing. IPX4 water resistant — gym, rain, commute ready. Touch controls for calls, music, and voice assistant. Fits all ear sizes with 3 tip options included.',
+    category: 'Electronics',
+    department: 'Audio',
+    regularPrice: 799,
+    discountPrice: 599,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['earbuds', 'wireless', 'tws', 'bluetooth', 'earphones', 'noise cancelling', 'airpods'],
+    images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800'],
+  },
+  {
+    retailHeading: 'Pro Grip Pop Socket — Collapsible Phone Stand',
+    longDescription: 'The original collapsible grip and stand for your phone. Expand for a secure one-handed grip or prop it up as a landscape stand for hands-free watching. Strong adhesive — sticks to most phone cases. Collapses flat so it fits in your pocket. Available in multiple colours.',
+    category: 'Accessories',
+    department: 'Phone',
+    regularPrice: 249,
+    discountPrice: 199,
+    deliveryCharge: 0,
+    taxRate: 12,
+    searchKeywords: ['popsocket', 'phone grip', 'pop socket', 'phone stand', 'mobile grip', 'phone holder'],
+    images: ['https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800'],
+  },
+  {
+    retailHeading: 'Adjustable Posture Corrector Support Belt',
+    longDescription: 'Gently pulls your shoulders back to align your spine naturally. Lightweight, breathable mesh fabric — wear under any clothing. Fully adjustable straps fit chest sizes 28–44 inches. Reduces neck pain, back ache, and shoulder tension from long sitting. Recommended for students, office workers, and gamers.',
+    category: 'Health',
+    department: 'Wellness',
+    regularPrice: 699,
+    discountPrice: 499,
+    deliveryCharge: 0,
+    taxRate: 12,
+    searchKeywords: ['posture corrector', 'back support', 'posture', 'back brace', 'spine', 'pain relief'],
+    images: ['https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800', 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800'],
+  },
+  {
+    retailHeading: 'Mini USB Desk Fan — Silent 3-Speed Portable',
+    longDescription: 'Stay cool anywhere this summer. Powers via USB — works with laptop, power bank, or adapter. 3 speed settings including a whisper-quiet sleep mode. 360° adjustable neck for precise airflow direction. Compact enough for your desk, bedside, or study table. Perfect for Kerala\'s hot summer months.',
+    category: 'Electronics',
+    department: 'Home Appliances',
+    regularPrice: 549,
+    discountPrice: 399,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['fan', 'desk fan', 'usb fan', 'table fan', 'mini fan', 'summer', 'portable fan', 'cooling'],
+    images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800'],
+  },
+  {
+    retailHeading: 'Fridge & Desk Organizer Set — 6 Piece Clear',
+    longDescription: 'Crystal-clear storage bins that make your fridge, desk, or bathroom look like a Pinterest board. Set of 6 includes 3 sizes for fruits, vegetables, snacks, stationery, and cosmetics. Stackable design saves space. BPA-free food-safe material. Smooth handles for easy sliding in and out.',
+    category: 'Home',
+    department: 'Organisation',
+    regularPrice: 499,
+    discountPrice: 349,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['organizer', 'fridge organizer', 'storage box', 'desk organizer', 'kitchen storage', 'home organizer'],
+    images: ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
+  },
+  {
+    retailHeading: '3-in-1 Fast Charging Cable — Type-C / Lightning / Micro',
+    longDescription: 'One cable for every device in your house. Charges iPhones, Android phones, tablets, earbuds, and more at the same time. Supports 65W fast charging on compatible devices. Durable nylon braided jacket — tangle-free and rated for 10,000+ bends. 1.2m length — perfect for desk or bedside use.',
+    category: 'Electronics',
+    department: 'Charging',
+    regularPrice: 399,
+    discountPrice: 299,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['charging cable', 'type c', 'fast charge', '3 in 1', 'usb cable', 'charger', 'lightning'],
+    images: ['https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?w=800', 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800'],
+  },
+  {
+    retailHeading: 'Aesthetic Room Wall Stickers — Pack of 50',
+    longDescription: 'Instantly upgrade your room walls without paint or damage. Pack of 50 includes stars, moons, clouds, quotes, and abstract shapes in a neutral black/gold palette. Peel-and-stick application — removable and repositionable with zero wall damage. Perfect for hostel rooms, bedrooms, and study spaces.',
+    category: 'Home',
+    department: 'Decor',
+    regularPrice: 349,
+    discountPrice: 249,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['wall stickers', 'room decor', 'aesthetic', 'wall decal', 'stickers', 'bedroom decor', 'dorm room'],
+    images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800', 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800'],
+  },
+  {
+    retailHeading: 'RYZE Pro Neckband Earphones — Deep Bass Bluetooth',
+    longDescription: 'Premium neckband earphones with powerful bass and clear treble for an immersive music experience. Bluetooth 5.0 connects instantly up to 10m range. 12hr battery life on a single charge. Built-in mic for hands-free calls. Magnetic earbuds click together when not in use. Sweat-resistant for gym and outdoor use.',
+    category: 'Electronics',
+    department: 'Audio',
+    regularPrice: 899,
+    discountPrice: 649,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'wireless earphones', 'sports earphones', 'gym earphones'],
+    images: ['https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'],
+  },
+]
+
 export default function Seeder() {
   const [loading, setLoading] = useState(false)
   const [complete, setComplete] = useState(false)
+  const [dropshipLoading, setDropshipLoading] = useState(false)
+  const [dropshipComplete, setDropshipComplete] = useState(false)
   const [error, setError] = useState('')
   const { user } = useAuth()
   const navigate = useNavigate()
+
+  const handleDropshipSeed = async () => {
+    if (!user) { setError('You must be logged in.'); return }
+    setDropshipLoading(true)
+    setError('')
+    try {
+      const batch = writeBatch(db)
+      DROPSHIP_PRODUCTS.forEach(p => {
+        const docRef = doc(collection(db, 'products'))
+        batch.set(docRef, {
+          ...p,
+          rating: 4.5,
+          reviews: 0,
+          ordersCount: 0,
+          inStock: true,
+          sizes: [],
+          colors: [],
+          customizable: false,
+          customizationLabel: '',
+          createdBy: user._id || 'system',
+          createdAt: serverTimestamp()
+        })
+      })
+      await batch.commit()
+      setDropshipComplete(true)
+    } catch (err) {
+      setError(err?.message || 'Failed to add products.')
+    } finally {
+      setDropshipLoading(false)
+    }
+  }
 
   const handleSeed = async () => {
     if (!user) {
@@ -180,6 +336,15 @@ export default function Seeder() {
             <p className="text-red-400 mb-4 font-bold text-sm">Authentication Required</p>
             <button onClick={() => navigate('/login')} className="bg-white/10 px-6 py-2 rounded-xl font-bold">Login</button>
           </div>
+        ) : dropshipComplete ? (
+          <div className="text-center py-6 border border-green-500/20 rounded-2xl bg-green-500/5 mb-6">
+            <CheckCircle2 className="w-10 h-10 text-green-500 mx-auto mb-3" />
+            <p className="text-white font-bold mb-1">10 Dropship Products Added!</p>
+            <p className="text-white/40 text-xs">Go to Staff Dashboard → Inventory to add your images.</p>
+            <button onClick={() => navigate('/staff/dashboard')} className="mt-4 bg-[#c9a962] text-black font-black px-6 py-2 rounded-xl text-sm uppercase">
+              Open Inventory
+            </button>
+          </div>
         ) : complete ? (
           <div className="text-center py-6">
             <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
@@ -191,11 +356,26 @@ export default function Seeder() {
           </div>
         ) : (
           <div>
-            <p className="text-white/60 text-sm mb-8">
-              This will instantly inject <strong>200 products</strong> into your Firebase database. Each product will have multiple unique photos automatically assigned, with zero lag or slowdown.
-            </p>
-
             {error && <p className="text-red-400 text-sm font-bold bg-red-500/10 rounded-xl p-4 mb-6">{error}</p>}
+
+            {/* Dropship Products */}
+            <div className="border border-[#c9a962]/20 rounded-2xl p-5 bg-[#c9a962]/5 mb-6">
+              <p className="text-[#c9a962] font-black text-sm uppercase tracking-widest mb-1">Dropship Catalog</p>
+              <p className="text-white/50 text-xs mb-4">Adds 10 real dropship products with full descriptions and pricing. Add your own images after via Staff Dashboard → Inventory.</p>
+              <button
+                onClick={handleDropshipSeed}
+                disabled={dropshipLoading}
+                className="w-full bg-[#c9a962] text-black font-black py-3 rounded-xl text-xs uppercase tracking-wide hover:bg-[#b09452] disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+              >
+                {dropshipLoading ? <><Loader2 className="w-4 h-4 animate-spin" />Adding Products...</> : 'Add 10 Dropship Products'}
+              </button>
+            </div>
+
+            <p className="text-white/30 text-xs mb-4 text-center uppercase tracking-widest font-bold">— or —</p>
+
+            <p className="text-white/60 text-sm mb-6">
+              Inject <strong>200 dummy products</strong> for testing/demo purposes.
+            </p>
 
             <button
               onClick={handleSeed}
