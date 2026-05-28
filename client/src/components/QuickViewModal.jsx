@@ -26,7 +26,10 @@ export default function QuickViewModal({ product, onClose }) {
 
   const price = product.discountPrice ?? product.regularPrice ?? product.price ?? 0
   const liked = isLiked(product._id || product.id)
-  const images = product.images?.length ? product.images : ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800']
+  const colorImages = selectedColor?.images?.filter(Boolean)
+  const images = (colorImages?.length > 0) ? colorImages
+    : product.images?.length ? product.images
+    : ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800']
   const discount = product.regularPrice && product.discountPrice
     ? Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)
     : 0
@@ -204,7 +207,7 @@ export default function QuickViewModal({ product, onClose }) {
                   {product.colors.map(c => (
                     <button
                       key={c.hex ?? c.name}
-                      onClick={() => setSelectedColor(c)}
+                      onClick={() => { setSelectedColor(c); setImgIndex(0) }}
                       title={c.name}
                       className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 transition-all ${selectedColor?.name === c.name ? 'border-[#c9a962] scale-105 shadow-lg' : 'border-white/20 hover:border-white/50'}`}
                       style={{ backgroundColor: c.hex ?? '#888' }}

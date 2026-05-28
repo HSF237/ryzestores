@@ -12,6 +12,7 @@ export default function InventoryManager() {
    const [submitting, setSubmitting] = useState(false)
 
    const [imageFiles, setImageFiles] = useState([null, null, null, null])
+   const [colorInput, setColorInput] = useState({ name: '', hex: '#000000' })
    const [formData, setFormData] = useState({
       smallHeading: '',
       longDescription: '',
@@ -61,7 +62,7 @@ export default function InventoryManager() {
          discountPrice: product.discountPrice || '',
          deliveryCharge: product.deliveryCharge || '0',
          sizes: product.sizes || [],
-         colors: product.colors || [],
+         colors: (product.colors || []).map(c => ({ ...c, images: c.images || ['', '', '', ''] })),
          imageUrl1: product.images?.[0] || '',
          imageUrl2: product.images?.[1] || '',
          imageUrl3: product.images?.[2] || '',
@@ -145,6 +146,31 @@ export default function InventoryManager() {
          sizes: prev.sizes.includes(size)
             ? prev.sizes.filter(s => s !== size)
             : [...prev.sizes, size]
+      }))
+   }
+
+   const addColor = () => {
+      if (!colorInput.name.trim()) return
+      setFormData(prev => ({
+         ...prev,
+         colors: [...prev.colors, { name: colorInput.name.trim(), hex: colorInput.hex, images: ['', '', '', ''] }]
+      }))
+      setColorInput({ name: '', hex: '#000000' })
+   }
+
+   const removeColor = (index) => {
+      setFormData(prev => ({ ...prev, colors: prev.colors.filter((_, i) => i !== index) }))
+   }
+
+   const updateColorImage = (colorIndex, imgIndex, url) => {
+      setFormData(prev => ({
+         ...prev,
+         colors: prev.colors.map((c, i) => {
+            if (i !== colorIndex) return c
+            const images = [...(c.images || ['', '', '', ''])]
+            images[imgIndex] = url
+            return { ...c, images }
+         })
       }))
    }
 
@@ -385,16 +411,58 @@ export default function InventoryManager() {
                            </div>
                            <div className="space-y-4">
                               <label className="flex items-center gap-2 text-xs font-black text-[#c9a962] uppercase tracking-widest">
-                                 <Palette className="w-3 h-3" /> Colors (Hex)
+                                 <Palette className="w-3 h-3" /> Colour Variants
                               </label>
+                              {/* Add colour input */}
                               <div className="flex gap-2">
                                  <input
                                     type="text"
-                                    placeholder="#000000"
-                                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-[#c9a962]/50 outline-none transition-all uppercase"
+                                    placeholder="Colour name (e.g. Red)"
+                                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm focus:border-[#c9a962]/50 outline-none transition-all"
+                                    value={colorInput.name}
+                                    onChange={e => setColorInput({ ...colorInput, name: e.target.value })}
                                  />
-                                 <button type="button" className="px-4 bg-[#c9a962] text-black rounded-xl font-bold text-xs uppercase transition-all hover:opacity-90">Add</button>
+                                 <input
+                                    type="color"
+                                    className="w-12 h-10 rounded-xl border border-white/10 bg-white/5 cursor-pointer"
+                                    value={colorInput.hex}
+                                    onChange={e => setColorInput({ ...colorInput, hex: e.target.value })}
+                                 />
+                                 <button type="button" onClick={addColor} className="px-4 bg-[#c9a962] text-black rounded-xl font-bold text-xs uppercase transition-all hover:opacity-90 flex items-center gap-1">
+                                    <Plus className="w-3 h-3" /> Add
+                                 </button>
                               </div>
+                              {/* Added colours with image slots */}
+                              {formData.colors.length > 0 && (
+                                 <div className="space-y-4 mt-2">
+                                    {formData.colors.map((color, ci) => (
+                                       <div key={ci} className="border border-white/10 rounded-2xl p-4 bg-white/[0.02] space-y-3">
+                                          <div className="flex items-center justify-between">
+                                             <div className="flex items-center gap-2">
+                                                <div className="w-6 h-6 rounded-full border border-white/20" style={{ background: color.hex }} />
+                                                <span className="text-sm font-black text-white">{color.name}</span>
+                                             </div>
+                                             <button type="button" onClick={() => removeColor(ci)} className="text-red-400/60 hover:text-red-400 transition-colors">
+                                                <X className="w-4 h-4" />
+                                             </button>
+                                          </div>
+                                          <p className="text-[9px] font-black text-white/30 uppercase tracking-widest">Images for {color.name} (paste URLs)</p>
+                                          <div className="grid grid-cols-2 gap-2">
+                                             {[0, 1, 2, 3].map(imgIdx => (
+                                                <input
+                                                   key={imgIdx}
+                                                   type="url"
+                                                   placeholder={`Image ${imgIdx + 1} URL`}
+                                                   className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs focus:border-[#c9a962]/50 outline-none transition-all"
+                                                   value={color.images?.[imgIdx] || ''}
+                                                   onChange={e => updateColorImage(ci, imgIdx, e.target.value)}
+                                                />
+                                             ))}
+                                          </div>
+                                       </div>
+                                    ))}
+                                 </div>
+                              )}
                            </div>
                         </div>
 
