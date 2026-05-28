@@ -202,16 +202,17 @@ const DROPSHIP_PRODUCTS = [
     images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800', 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800'],
   },
   {
-    retailHeading: 'RYZE Pro Neckband Earphones — Deep Bass Bluetooth',
-    longDescription: 'Premium neckband earphones with powerful bass and clear treble for an immersive music experience. Bluetooth 5.0 connects instantly up to 10m range. 12hr battery life on a single charge. Built-in mic for hands-free calls. Magnetic earbuds click together when not in use. Sweat-resistant for gym and outdoor use.',
+    retailHeading: 'Wireless Neo Bluetooth Neckband — Deep Bass',
+    longDescription: 'Lightweight Bluetooth neckband earphones with powerful bass and clear sound. Instant Bluetooth pairing up to 10m range. Charges fully in just 1 hour. Built-in mic for crisp hands-free calls. Magnetic earbuds snap together when not in use — no tangles, no mess. Ergonomic neckband design stays comfortable all day.',
     category: 'Electronics',
     department: 'Audio',
-    regularPrice: 899,
+    regularPrice: 999,
     discountPrice: 649,
     deliveryCharge: 0,
     taxRate: 18,
-    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'wireless earphones', 'sports earphones', 'gym earphones'],
+    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'wireless earphones', 'neckband earphones', 'gym earphones'],
     images: ['https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'],
+    supplierLink: 'https://www.meesho.com/wireless-3-neo-bluetooth-neckband/p/ex2f3d',
   },
 ]
 
