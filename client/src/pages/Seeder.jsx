@@ -101,6 +101,7 @@ const DROPSHIP_PRODUCTS = [
     taxRate: 18,
     searchKeywords: ['led', 'rgb', 'room decor', 'smart lights', 'led strip', 'gaming room', 'neon'],
     images: ['https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
+    supplierLink: 'https://deodap.in/products/13460_3m_led_strip_lights_n_remote',
   },
   {
     retailHeading: '360° Magnetic Car & Desk Phone Holder',

@@ -355,6 +355,7 @@ export const productService = {
       searchKeywords,
       customizable: data.customizable === true || data.customizable === 'true' || false,
       customizationLabel: data.customizationLabel || '',
+      supplierLink: data.supplierLink || '',
       rating: 4.5,
       reviews: 0,
       inStock: true,

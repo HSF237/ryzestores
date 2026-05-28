@@ -31,6 +31,7 @@ export default function InventoryManager() {
       searchKeywords: '',
       customizable: false,
       customizationLabel: '',
+      supplierLink: '',
    })
 
    useEffect(() => {
@@ -71,6 +72,7 @@ export default function InventoryManager() {
          searchKeywords: (product.searchKeywords || []).join(', '),
          customizable: product.customizable || false,
          customizationLabel: product.customizationLabel || '',
+         supplierLink: product.supplierLink || '',
       })
    }
 
@@ -97,6 +99,7 @@ export default function InventoryManager() {
          data.append('searchKeywords', formData.searchKeywords)
          data.append('customizable', formData.customizable)
          data.append('customizationLabel', formData.customizationLabel)
+         data.append('supplierLink', formData.supplierLink)
 
          const urls = [formData.imageUrl1, formData.imageUrl2, formData.imageUrl3, formData.imageUrl4].filter(u => u && u.startsWith('http'))
          urls.forEach(url => data.append('images', url))
@@ -115,7 +118,7 @@ export default function InventoryManager() {
             discountPrice: '', deliveryCharge: '0', sizes: [], colors: [],
             imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '',
             taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '',
-            customizable: false, customizationLabel: ''
+            customizable: false, customizationLabel: '', supplierLink: ''
          })
          setImageFiles([null, null, null, null])
          fetchProducts()
@@ -477,7 +480,22 @@ export default function InventoryManager() {
                            <p className="text-[9px] text-white/20 font-bold uppercase italic text-center">Add misspellings or related terms to help customers find this product.</p>
                         </div>
 
-                        {/* Section 7: Customization */}
+                        {/* Section 7: Supplier Link (Staff Only — hidden from customers) */}
+                        <div className="space-y-3 pb-4 border border-blue-500/10 rounded-2xl p-5 bg-blue-500/[0.03]">
+                           <label className="flex items-center gap-2 text-xs font-black text-blue-400 uppercase tracking-widest">
+                              🔒 Supplier Link <span className="text-white/20 font-medium normal-case tracking-normal">(Staff only — never shown to customers)</span>
+                           </label>
+                           <input
+                              type="url"
+                              placeholder="https://deodap.in/products/... or meesho.com/..."
+                              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-400/50 outline-none transition-all"
+                              value={formData.supplierLink}
+                              onChange={e => setFormData({ ...formData, supplierLink: e.target.value })}
+                           />
+                           <p className="text-[9px] text-white/20 font-bold uppercase">Paste the Meesho / DeoDap / supplier URL. When you get an order, you'll see a one-click button to open this and place the order.</p>
+                        </div>
+
+                        {/* Section 8: Customization */}
                         <div className="space-y-4 pb-4 border border-white/5 rounded-2xl p-5 bg-white/[0.02]">
                            <div className="flex items-center justify-between">
                               <label className="flex items-center gap-2 text-xs font-black text-[#c9a962] uppercase tracking-widest">

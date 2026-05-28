@@ -256,13 +256,29 @@ export default function OrderManager() {
                   <div className="space-y-4">
                     <h5 className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-4">Items Secured</h5>
                     {selectedOrder.items.map((item, i) => (
-                      <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02]">
-                        <img src={item.image} alt="" className="w-12 h-12 rounded-xl object-cover" />
-                        <div className="flex-1">
-                          <h6 className="text-sm font-bold">{item.name}</h6>
-                          <p className="text-[10px] text-white/30 font-black uppercase tracking-widest">Qty: {item.qty} • Size: {item.size}</p>
+                      <div key={i} className="p-4 rounded-2xl bg-white/[0.02] space-y-3">
+                        <div className="flex items-center gap-4">
+                          <img src={item.image} alt="" className="w-12 h-12 rounded-xl object-cover" />
+                          <div className="flex-1">
+                            <h6 className="text-sm font-bold">{item.name}</h6>
+                            <p className="text-[10px] text-white/30 font-black uppercase tracking-widest">
+                              Qty: {item.qty} • Size: {item.size}
+                              {item.customization && <span className="text-[#c9a962]"> • ✏ {item.customization}</span>}
+                            </p>
+                          </div>
+                          <span className="text-sm font-black text-[#c9a962]">₹{item.price.toLocaleString()}</span>
                         </div>
-                        <span className="text-sm font-black text-[#c9a962]">₹{item.price.toLocaleString()}</span>
+                        {item.supplierLink && (
+                          <a
+                            href={item.supplierLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 w-full py-2 px-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest hover:bg-blue-500/20 transition-all"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            Order from Supplier — {item.qty}x
+                          </a>
+                        )}
                       </div>
                     ))}
                   </div>

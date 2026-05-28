@@ -133,6 +133,7 @@ export default function Checkout() {
                 color: i.color || 'Default',
                 image: i.image || (i.images && i.images[0]) || '',
                 customization: i.customization || null,
+                supplierLink: i.supplierLink || null,
               })),
               shippingAddress: {
                 street: selectedAddress.street || '',

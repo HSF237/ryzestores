@@ -42,6 +42,7 @@ export default function QuickViewModal({ product, onClose }) {
       size: selectedSize ?? product.sizes?.[0] ?? 'One Size',
       color: selectedColor?.name ?? product.colors?.[0]?.name ?? 'Default',
       customization: customizationText.trim() || null,
+      supplierLink: product.supplierLink || null,
     })
     setAdded(true)
     setTimeout(() => { setAdded(false); onClose() }, 1000)
