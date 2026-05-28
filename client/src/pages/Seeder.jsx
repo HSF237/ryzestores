@@ -246,9 +246,10 @@ export default function Seeder() {
           reviews: 0,
           ordersCount: 0,
           inStock: true,
-          sizes: [],
-          colors: [],
-          customizable: false,
+          sizes: p.sizes || [],
+          colors: p.colors || [],
+          sizeVariants: p.sizeVariants || [],
+          customizable: p.customizable || false,
           customizationLabel: '',
           createdBy: user._id || 'system',
           createdAt: serverTimestamp()
