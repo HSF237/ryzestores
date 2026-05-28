@@ -202,17 +202,17 @@ const DROPSHIP_PRODUCTS = [
     images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800', 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800'],
   },
   {
-    retailHeading: 'Wireless Neo Bluetooth Neckband — Deep Bass',
-    longDescription: 'Lightweight Bluetooth neckband earphones with powerful bass and clear sound. Instant Bluetooth pairing up to 10m range. Charges fully in just 1 hour. Built-in mic for crisp hands-free calls. Magnetic earbuds snap together when not in use — no tangles, no mess. Ergonomic neckband design stays comfortable all day.',
+    retailHeading: 'BT Jazz Neckband — 48Hr Battery, Type-C, Water Resistant',
+    longDescription: 'Premium Bluetooth 5.1 neckband with ultra bass and HD stereo sound. Massive 48-hour (2-day) battery life so you never run out mid-day. Type-C fast charging. Water resistant — sweat and rain proof for gym and outdoor use. Unique call vibration alert so you never miss a call. Magnetic earbuds snap together. Durable braided wires. Comes with 1-year warranty.',
     category: 'Electronics',
     department: 'Audio',
     regularPrice: 999,
     discountPrice: 649,
     deliveryCharge: 0,
     taxRate: 18,
-    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'wireless earphones', 'neckband earphones', 'gym earphones'],
+    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'bt jazz', 'wireless neckband', 'waterproof earphones', 'gym earphones', 'type c'],
     images: ['https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'],
-    supplierLink: 'https://www.meesho.com/wireless-3-neo-bluetooth-neckband/p/ex2f3d',
+    supplierLink: 'https://www.meesho.com/bt-jazz-neckband-with-vibration-neckband-bluetooth-wireless-neckband-high-bass-neckband-v51-hd-sound-quality-stereo-bass-with-vibration-grey-true-wireless-type-c-fast-charge-high-bass-clears-treble-long-battery-life-2-days-premium-neckband/p/637723435',
   },
 ]
 
