@@ -328,6 +328,7 @@ export const productService = {
     // Parse JSON fields
     const sizes = typeof data.sizes === 'string' ? JSON.parse(data.sizes) : data.sizes || []
     const colors = typeof data.colors === 'string' ? JSON.parse(data.colors) : data.colors || []
+    const sizeVariants = typeof data.sizeVariants === 'string' ? JSON.parse(data.sizeVariants) : data.sizeVariants || []
     const searchKeywords = typeof data.searchKeywords === 'string'
       ? data.searchKeywords.split(',').map(s => s.trim()).filter(Boolean)
       : data.searchKeywords || []
@@ -347,6 +348,7 @@ export const productService = {
       deliveryCharge: Number(data.deliveryCharge) || 0,
       sizes,
       colors,
+      sizeVariants,
       images,
       department: data.department || data.category || '',
       taxRate: Number(data.taxRate) || 12,
@@ -409,6 +411,7 @@ export const productService = {
 
     if (updates.sizes) updates.sizes = typeof updates.sizes === 'string' ? JSON.parse(updates.sizes) : updates.sizes
     if (updates.colors) updates.colors = typeof updates.colors === 'string' ? JSON.parse(updates.colors) : updates.colors
+    if (updates.sizeVariants) updates.sizeVariants = typeof updates.sizeVariants === 'string' ? JSON.parse(updates.sizeVariants) : updates.sizeVariants
     if (updates.searchKeywords) {
       updates.searchKeywords = typeof updates.searchKeywords === 'string'
         ? updates.searchKeywords.split(',').map(s => s.trim()).filter(Boolean)

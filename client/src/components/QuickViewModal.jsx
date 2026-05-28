@@ -11,6 +11,7 @@ export default function QuickViewModal({ product, onClose }) {
   const { addToCart } = useCart()
   const { isLiked, toggleWishlist } = useWishlist()
   const [selectedSize, setSelectedSize] = useState(null)
+  const [selectedSizeVariant, setSelectedSizeVariant] = useState(null)
   const [selectedColor, setSelectedColor] = useState(null)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
@@ -26,8 +27,10 @@ export default function QuickViewModal({ product, onClose }) {
 
   const price = product.discountPrice ?? product.regularPrice ?? product.price ?? 0
   const liked = isLiked(product._id || product.id)
+  const sizeVariantImages = selectedSizeVariant?.images?.filter(Boolean)
   const colorImages = selectedColor?.images?.filter(Boolean)
-  const images = (colorImages?.length > 0) ? colorImages
+  const images = (sizeVariantImages?.length > 0) ? sizeVariantImages
+    : (colorImages?.length > 0) ? colorImages
     : product.images?.length ? product.images
     : ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800']
   const discount = product.regularPrice && product.discountPrice
@@ -42,10 +45,10 @@ export default function QuickViewModal({ product, onClose }) {
       title: product.retailHeading ?? product.name,
       price,
       image: images[0],
-      size: selectedSize ?? product.sizes?.[0] ?? 'One Size',
+      size: selectedSizeVariant?.name ?? selectedSize ?? product.sizes?.[0] ?? product.sizeVariants?.[0]?.name ?? 'One Size',
       color: selectedColor?.name ?? product.colors?.[0]?.name ?? 'Default',
       customization: customizationText.trim() || null,
-      supplierLink: product.supplierLink || null,
+      supplierLink: selectedSizeVariant?.supplierLink || selectedColor?.supplierLink || product.supplierLink || null,
     })
     setAdded(true)
     setTimeout(() => { setAdded(false); onClose() }, 1000)
@@ -230,10 +233,33 @@ export default function QuickViewModal({ product, onClose }) {
                   {product.sizes.map(s => (
                     <button
                       key={s}
-                      onClick={() => setSelectedSize(s)}
-                      className={`min-w-[40px] sm:min-w-[48px] px-3 h-10 sm:h-12 rounded-xl border text-[10px] sm:text-xs font-black transition-all ${selectedSize === s ? 'border-[#c9a962] bg-[#c9a962] text-black shadow-lg shadow-[#c9a962]/20' : 'border-white/10 bg-white/5 text-white/60 hover:border-[#c9a962]/50 hover:text-white'}`}
+                      onClick={() => { setSelectedSize(s); setSelectedSizeVariant(null) }}
+                      className={`min-w-[40px] sm:min-w-[48px] px-3 h-10 sm:h-12 rounded-xl border text-[10px] sm:text-xs font-black transition-all ${selectedSize === s && !selectedSizeVariant ? 'border-[#c9a962] bg-[#c9a962] text-black shadow-lg shadow-[#c9a962]/20' : 'border-white/10 bg-white/5 text-white/60 hover:border-[#c9a962]/50 hover:text-white'}`}
                     >
                       {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Size Variants Selector (with images per size) */}
+            {product.sizeVariants?.length > 0 && (
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/40 mb-3">
+                  Size <span className="text-white ml-2">{selectedSizeVariant?.name ?? ''}</span>
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {product.sizeVariants.map(sv => (
+                    <button
+                      key={sv.name}
+                      onClick={() => { setSelectedSizeVariant(sv); setSelectedSize(sv.name); setImgIndex(0) }}
+                      className={`relative min-w-[40px] sm:min-w-[48px] px-3 h-10 sm:h-12 rounded-xl border text-[10px] sm:text-xs font-black transition-all ${selectedSizeVariant?.name === sv.name ? 'border-[#c9a962] bg-[#c9a962] text-black shadow-lg shadow-[#c9a962]/20' : 'border-white/10 bg-white/5 text-white/60 hover:border-[#c9a962]/50 hover:text-white'}`}
+                    >
+                      {sv.name}
+                      {sv.images?.some(Boolean) && (
+                        <span className="absolute -top-1 -right-1 w-2 h-2 bg-blue-400 rounded-full border border-[#111112]" />
+                      )}
                     </button>
                   ))}
                 </div>

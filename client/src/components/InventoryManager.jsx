@@ -13,6 +13,7 @@ export default function InventoryManager() {
 
    const [imageFiles, setImageFiles] = useState([null, null, null, null])
    const [colorInput, setColorInput] = useState({ name: '', hex: '#000000' })
+   const [sizeInput, setSizeInput] = useState({ name: '' })
    const [formData, setFormData] = useState({
       smallHeading: '',
       longDescription: '',
@@ -22,6 +23,7 @@ export default function InventoryManager() {
       deliveryCharge: '0',
       sizes: [],
       colors: [],
+      sizeVariants: [],
       imageUrl1: '',
       imageUrl2: '',
       imageUrl3: '',
@@ -62,7 +64,8 @@ export default function InventoryManager() {
          discountPrice: product.discountPrice || '',
          deliveryCharge: product.deliveryCharge || '0',
          sizes: product.sizes || [],
-         colors: (product.colors || []).map(c => ({ ...c, images: c.images || ['', '', '', ''] })),
+         colors: (product.colors || []).map(c => ({ ...c, images: c.images || ['', '', '', ''], supplierLink: c.supplierLink || '' })),
+         sizeVariants: (product.sizeVariants || []).map(sv => ({ ...sv, images: sv.images || ['', '', '', ''], supplierLink: sv.supplierLink || '' })),
          imageUrl1: product.images?.[0] || '',
          imageUrl2: product.images?.[1] || '',
          imageUrl3: product.images?.[2] || '',
@@ -90,7 +93,9 @@ export default function InventoryManager() {
          data.append('discountPrice', formData.discountPrice)
          data.append('deliveryCharge', formData.deliveryCharge)
 
-         formData.sizes.forEach(s => data.append('sizes', s))
+         data.append('sizes', JSON.stringify(formData.sizes))
+         data.append('colors', JSON.stringify(formData.colors))
+         data.append('sizeVariants', JSON.stringify(formData.sizeVariants))
 
          imageFiles.forEach(file => { if (file) data.append('images', file) })
 
@@ -116,7 +121,7 @@ export default function InventoryManager() {
          setEditingId(null)
          setFormData({
             smallHeading: '', longDescription: '', category: 'Footwear', price: '',
-            discountPrice: '', deliveryCharge: '0', sizes: [], colors: [],
+            discountPrice: '', deliveryCharge: '0', sizes: [], colors: [], sizeVariants: [],
             imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '',
             taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '',
             customizable: false, customizationLabel: '', supplierLink: ''
@@ -153,7 +158,7 @@ export default function InventoryManager() {
       if (!colorInput.name.trim()) return
       setFormData(prev => ({
          ...prev,
-         colors: [...prev.colors, { name: colorInput.name.trim(), hex: colorInput.hex, images: ['', '', '', ''] }]
+         colors: [...prev.colors, { name: colorInput.name.trim(), hex: colorInput.hex, images: ['', '', '', ''], supplierLink: '' }]
       }))
       setColorInput({ name: '', hex: '#000000' })
    }
@@ -174,6 +179,45 @@ export default function InventoryManager() {
       }))
    }
 
+   const updateColorLink = (colorIndex, url) => {
+      setFormData(prev => ({
+         ...prev,
+         colors: prev.colors.map((c, i) => i !== colorIndex ? c : { ...c, supplierLink: url })
+      }))
+   }
+
+   const addSizeVariant = () => {
+      if (!sizeInput.name.trim()) return
+      setFormData(prev => ({
+         ...prev,
+         sizeVariants: [...prev.sizeVariants, { name: sizeInput.name.trim(), images: ['', '', '', ''], supplierLink: '' }]
+      }))
+      setSizeInput({ name: '' })
+   }
+
+   const removeSizeVariant = (index) => {
+      setFormData(prev => ({ ...prev, sizeVariants: prev.sizeVariants.filter((_, i) => i !== index) }))
+   }
+
+   const updateSizeVariantImage = (svIndex, imgIndex, url) => {
+      setFormData(prev => ({
+         ...prev,
+         sizeVariants: prev.sizeVariants.map((sv, i) => {
+            if (i !== svIndex) return sv
+            const images = [...(sv.images || ['', '', '', ''])]
+            images[imgIndex] = url
+            return { ...sv, images }
+         })
+      }))
+   }
+
+   const updateSizeVariantLink = (svIndex, url) => {
+      setFormData(prev => ({
+         ...prev,
+         sizeVariants: prev.sizeVariants.map((sv, i) => i !== svIndex ? sv : { ...sv, supplierLink: url })
+      }))
+   }
+
    const handleFileChange = (index, file) => {
       const newFiles = [...imageFiles]
       newFiles[index] = file
@@ -188,7 +232,7 @@ export default function InventoryManager() {
                <p className="text-white/50 text-sm">Manage your store products like an Amazon Pro.</p>
             </div>
             <button
-               onClick={() => { setIsAdding(true); setIsEditing(false); setEditingId(null); setFormData({ smallHeading: '', longDescription: '', category: 'Footwear', price: '', discountPrice: '', deliveryCharge: '0', sizes: [], colors: [], imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '', taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '', customizable: false, customizationLabel: '' }); }}
+               onClick={() => { setIsAdding(true); setIsEditing(false); setEditingId(null); setFormData({ smallHeading: '', longDescription: '', category: 'Footwear', price: '', discountPrice: '', deliveryCharge: '0', sizes: [], colors: [], sizeVariants: [], imageUrl1: '', imageUrl2: '', imageUrl3: '', imageUrl4: '', taxRate: '12', productVoucher: '', productVoucherDiscount: '0', searchKeywords: '', customizable: false, customizationLabel: '', supplierLink: '' }); }}
                className="bg-[#c9a962] text-black font-black px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-[#b09452] transition-colors shadow-lg shadow-[#c9a962]/20"
             >
                <Plus className="w-5 h-5" /> Add New Product
@@ -459,11 +503,73 @@ export default function InventoryManager() {
                                                 />
                                              ))}
                                           </div>
+                                          <input
+                                             type="url"
+                                             placeholder="Supplier link for this colour (Meesho/DeoDap URL)"
+                                             className="w-full bg-blue-500/[0.05] border border-blue-500/20 rounded-xl px-3 py-2 text-xs focus:border-blue-400/50 outline-none transition-all placeholder-white/20"
+                                             value={color.supplierLink || ''}
+                                             onChange={e => updateColorLink(ci, e.target.value)}
+                                          />
                                        </div>
                                     ))}
                                  </div>
                               )}
                            </div>
+                        </div>
+
+                        {/* Section 3b: Size Variants (images + supplier links per size) */}
+                        <div className="space-y-4">
+                           <label className="flex items-center gap-2 text-xs font-black text-[#c9a962] uppercase tracking-widest">
+                              <Maximize className="w-3 h-3" /> Size Variants <span className="text-white/20 font-medium normal-case tracking-normal text-[10px]">(optional — add images & supplier links per size)</span>
+                           </label>
+                           <div className="flex gap-2">
+                              <input
+                                 type="text"
+                                 placeholder="Size name (e.g. Small, 10ml, 1-seater)"
+                                 className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm focus:border-[#c9a962]/50 outline-none transition-all"
+                                 value={sizeInput.name}
+                                 onChange={e => setSizeInput({ ...sizeInput, name: e.target.value })}
+                                 onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addSizeVariant())}
+                              />
+                              <button type="button" onClick={addSizeVariant} className="px-4 bg-[#c9a962] text-black rounded-xl font-bold text-xs uppercase transition-all hover:opacity-90 flex items-center gap-1 shrink-0">
+                                 <Plus className="w-3 h-3" /> Add
+                              </button>
+                           </div>
+                           {formData.sizeVariants.length > 0 && (
+                              <div className="space-y-4">
+                                 {formData.sizeVariants.map((sv, si) => (
+                                    <div key={si} className="border border-white/10 rounded-2xl p-4 bg-white/[0.02] space-y-3">
+                                       <div className="flex items-center justify-between">
+                                          <span className="text-sm font-black text-white">{sv.name}</span>
+                                          <button type="button" onClick={() => removeSizeVariant(si)} className="text-red-400/60 hover:text-red-400 transition-colors">
+                                             <X className="w-4 h-4" />
+                                          </button>
+                                       </div>
+                                       <p className="text-[9px] font-black text-white/30 uppercase tracking-widest">Images for {sv.name} (paste URLs)</p>
+                                       <div className="grid grid-cols-2 gap-2">
+                                          {[0, 1, 2, 3].map(imgIdx => (
+                                             <input
+                                                key={imgIdx}
+                                                type="url"
+                                                placeholder={`Image ${imgIdx + 1} URL`}
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs focus:border-[#c9a962]/50 outline-none transition-all"
+                                                value={sv.images?.[imgIdx] || ''}
+                                                onChange={e => updateSizeVariantImage(si, imgIdx, e.target.value)}
+                                             />
+                                          ))}
+                                       </div>
+                                       <input
+                                          type="url"
+                                          placeholder="Supplier link for this size (Meesho/DeoDap URL)"
+                                          className="w-full bg-blue-500/[0.05] border border-blue-500/20 rounded-xl px-3 py-2 text-xs focus:border-blue-400/50 outline-none transition-all placeholder-white/20"
+                                          value={sv.supplierLink || ''}
+                                          onChange={e => updateSizeVariantLink(si, e.target.value)}
+                                       />
+                                    </div>
+                                 ))}
+                              </div>
+                           )}
+                           <p className="text-[9px] text-white/20 font-bold uppercase italic">Use when different sizes have different images or different supplier listings.</p>
                         </div>
 
                         {/* Section 4: Media */}
