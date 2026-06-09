@@ -23,30 +23,6 @@ const item = {
   show: { opacity: 1, y: 0 },
 }
 
-const FlashDealCountdown = () => {
-  const [timeLeft, setTimeLeft] = useState({ h: 12, m: 45, s: 0 })
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.s > 0) return { ...prev, s: prev.s - 1 }
-        if (prev.m > 0) return { ...prev, m: prev.m - 1, s: 59 }
-        if (prev.h > 0) return { h: prev.h - 1, m: 59, s: 59 }
-        return prev
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
-  return (
-    <div className="flex gap-2 text-white font-black text-xl">
-      <div className="bg-black/40 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 w-12 text-center">{timeLeft.h}</div>
-      <span className="text-[#c9a962]">:</span>
-      <div className="bg-black/40 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 w-12 text-center">{timeLeft.m}</div>
-      <span className="text-[#c9a962]">:</span>
-      <div className="bg-black/40 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 w-12 text-center">{timeLeft.s}</div>
-    </div>
-  )
-}
-
 export default function Home() {
   const navigate = useNavigate()
   const [heroIndex, setHeroIndex] = useState(0)
@@ -86,10 +62,10 @@ export default function Home() {
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="whitespace-nowrap flex gap-12 font-black text-[10px] uppercase tracking-[0.3em]"
         >
-          <span>✨ Flash Sale Live: Up to 70% Off ryze Tech</span>
-          <span>🚀 Free Express Shipping on all orders above ₹4,999</span>
-          <span>💎 New Membership Program Launched: Join ryze Club Now</span>
-          <span>⚡ Next Drop: Phantom Watch V2 in 04:12:00</span>
+          <span>✨ Selected items on sale — real prices shown on every product</span>
+          <span>🚀 Free shipping on eligible orders</span>
+          <span>💎 Create a free account for faster checkout</span>
+          <span>⚡ New arrivals added regularly</span>
         </motion.div>
       </div>
       {/* ——— Hero Slider ——— */}
@@ -195,6 +171,7 @@ export default function Home() {
                       quality={70}
                       wrapperClassName="w-full h-full"
                       className="group-hover:scale-110 transition-transform duration-700 object-cover"
+                      onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=160&q=70' }}
                     />
                   </div>
                 </div>
@@ -224,7 +201,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-2 sm:gap-3 flex-1">
               {[
                 'https://images.unsplash.com/photo-1546868871-7041f2a55e12',
-                'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab',
+                'https://images.unsplash.com/photo-1445205170230-053b83016050',
                 'https://images.unsplash.com/photo-1583394838336-acd977736f90',
                 'https://images.unsplash.com/photo-1511499767150-a48a237f0083'
               ].map((img, i) => (
@@ -235,6 +212,7 @@ export default function Home() {
                     quality={70}
                     wrapperClassName="w-full h-full"
                     className="group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=70' }}
                   />
                 </div>
               ))}
@@ -295,14 +273,13 @@ export default function Home() {
             <div className="absolute top-0 right-0 p-4">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             </div>
-            <h3 className="font-outfit font-black text-base sm:text-lg mb-0.5 text-white uppercase tracking-tighter">Flash Deal</h3>
-            <p className="text-[7px] sm:text-red-500 mb-4 font-black uppercase tracking-[0.2em] text-red-500">Ends In:</p>
+            <h3 className="font-outfit font-black text-base sm:text-lg mb-0.5 text-white uppercase tracking-tighter">Top Deals</h3>
+            <p className="text-[7px] sm:text-[9px] mb-4 font-black uppercase tracking-[0.2em] text-[#c9a962]">Best Prices</p>
             <div className="flex-1 flex flex-col justify-center gap-6">
-              <FlashDealCountdown />
               <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10">
                 <OptimizedImage src="https://images.unsplash.com/photo-1549439602-43ebca2327af" width={600} quality={70} wrapperClassName="w-full h-full" className="group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <span className="text-white font-black text-[10px] uppercase tracking-widest bg-[#c9a962]/40 backdrop-blur-md px-4 py-2 rounded-full">Save 70%</span>
+                  <span className="text-white font-black text-[10px] uppercase tracking-widest bg-[#c9a962]/40 backdrop-blur-md px-4 py-2 rounded-full">On Sale</span>
                 </div>
               </div>
             </div>
@@ -346,8 +323,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden relative group">
           <OptimizedImage src="https://images.unsplash.com/photo-1441986300917-64674bd600d8" width={1600} quality={75} wrapperClassName="w-full h-[250px] sm:h-[300px]" className="group-hover:scale-105 transition-transform duration-1000" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 sm:via-black/50 to-transparent flex flex-col justify-center px-6 sm:px-16">
-            <span className="text-[#c9a962] font-black tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm uppercase mb-3 sm:mb-4">Midnight Sale</span>
-            <h2 className="text-3xl sm:text-6xl font-outfit font-black text-white max-w-lg leading-tight sm:leading-none mb-6">UNSTOPPABLE DEALS STARTING NOW</h2>
+            <span className="text-[#c9a962] font-black tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm uppercase mb-3 sm:mb-4">Featured</span>
+            <h2 className="text-3xl sm:text-6xl font-outfit font-black text-white max-w-lg leading-tight sm:leading-none mb-6">EXPLORE THE COLLECTION</h2>
             <button
               onClick={() => navigate('/shop')}
               className="bg-white text-black font-black px-8 py-3 sm:px-10 sm:py-4 rounded-full text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#c9a962] transition-colors self-start shadow-2xl"
@@ -426,7 +403,6 @@ export default function Home() {
                           <span className="text-[10px] sm:text-xs mr-0.5">₹</span>{product.discountPrice?.toLocaleString()}
                         </span>
                       </div>
-                      <p className="text-white/40 text-[9px] font-bold mt-1">{Math.floor(Math.random() * 200) + 50}+ bought in past month</p>
                     </div>
                   </div>
                 </motion.div>
@@ -508,7 +484,7 @@ export default function Home() {
           viewport={{ once: true }}
         >
           <h2 className="font-outfit font-black text-2xl sm:text-3xl text-white mb-3 uppercase tracking-tighter">Ready to Upgrade?</h2>
-          <p className="text-white/40 mb-6 text-[10px] sm:text-xs max-w-sm mx-auto font-medium">Browse our full collection of premium lifestyle essentials.</p>
+          <p className="text-white/40 mb-6 text-[10px] sm:text-xs max-w-sm mx-auto font-medium">Browse our full collection of everyday lifestyle essentials.</p>
           <button
             onClick={() => navigate('/shop')}
             className="group px-8 py-3 bg-[#c9a962] rounded-xl text-black font-black uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-xl"
@@ -522,9 +498,9 @@ export default function Home() {
       <section className="py-12 px-4 bg-white/[0.01]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: 'ryze Quality', desc: 'Hand-picked luxury items vetted by global experts.', icon: '💎' },
-            { title: 'Secure Vault', desc: 'Encrypted end-to-end payments with 24/7 protection.', icon: '🛡️' },
-            { title: 'Priority Drop', desc: 'Fastest delivery engine in the luxury segment.', icon: '🚀' },
+            { title: 'Chosen With Care', desc: 'Products selected with care, at fair and honest prices.', icon: '💎' },
+            { title: 'Secure Checkout', desc: 'Your account and details are protected with trusted sign-in.', icon: '🛡️' },
+            { title: 'Worldwide Shipping', desc: 'Reliable delivery with tracking on every order.', icon: '🚀' },
           ].map((trust, i) => (
             <motion.div
               key={i}

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle2, Loader2, Database } from 'lucide-react'
 import { db } from '../config/firebase'
-import { writeBatch, collection, doc, serverTimestamp } from 'firebase/firestore'
+import { writeBatch, collection, doc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
 
 const UNSPLASH = {
@@ -51,12 +51,12 @@ const UNSPLASH = {
 }
 
 const DESCRIPTIONS = {
-  Footwear: 'Crafted with precision-engineered materials for unmatched comfort and style. Designed to perform across every terrain and occasion.',
-  Apparel: 'Premium fabric with an ryze cut — engineered for movement, comfort, and lasting style. A wardrobe essential reinvented.',
-  Electronics: 'Next-generation technology meets premium design. Built for performance, precision, and a seamless user experience.',
-  Beauty: 'Formulated with clinically-tested actives and luxury ingredients. Designed to deliver visible, lasting results.',
-  Accessories: 'Handcrafted from premium materials with meticulous attention to detail. Elevate every outfit and every moment.',
-  Home: 'Designed to transform your space — a perfect balance of function, beauty, and lasting quality.',
+  Footwear: 'Comfortable, durable everyday footwear designed to look good and feel good across daily wear.',
+  Apparel: 'Comfortable, well-made fabric with a clean fit — an easy everyday wardrobe staple.',
+  Electronics: 'Practical, modern tech built for reliable everyday performance and a simple user experience.',
+  Beauty: 'A simple, everyday care formula. Please patch-test before first use and check the ingredients if you have sensitive skin.',
+  Accessories: 'A well-made everyday accessory with a clean design to complement any outfit.',
+  Home: 'A practical, good-looking piece designed to be useful and tidy in your space.',
 }
 
 const BASE_PRODUCTS = [
@@ -90,6 +90,93 @@ const BASE_PRODUCTS = [
 ]
 
 const DROPSHIP_PRODUCTS = [
+  // ─── NEW LAUNCH PICKS (2026) ───
+  // TODO before publishing each: order a sample, replace `images` with your REAL product photos,
+  // and add the `supplierLink` to the exact listing you ordered from.
+  {
+    retailHeading: 'Sunset Projection Lamp — Aesthetic Room Glow',
+    longDescription: 'A small LED lamp that projects a warm sunset glow onto your walls and ceiling. Adjustable angle to aim the light where you want, USB powered. Great for photos, video backdrops, and a cosy room mood. Note: this is a decorative mood light, not a main room light.',
+    category: 'Home',
+    department: 'Lighting',
+    regularPrice: 1499,
+    discountPrice: 899,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['sunset lamp', 'projection light', 'room decor', 'aesthetic', 'mood light', 'led lamp', 'rainbow lamp'],
+    images: [
+      'https://images.meesho.com/images/products/947152174/2zlf7_512.webp',
+      'https://images.meesho.com/images/products/947152174/sdl6m_512.webp',
+      'https://images.meesho.com/images/products/947152174/tboil_512.webp',
+      'https://images.meesho.com/images/products/947152174/1skvg_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/sunset-lamp-projector-16-color-led-light-desk-lamp-rainbow-night-light-360-rotation-romantic-sunlight-for-bedroom-party-photography-with-remote-sunset-lamp/p/fnwram',
+  },
+  {
+    retailHeading: 'Electric Scalp & Head Massager — Handheld Vibrating',
+    longDescription: 'Handheld battery-operated scalp and head massager with soft nodes and gentle vibration. Simple one-button operation. A relaxing self-care tool to unwind after study or work. (Relaxation aid only — results vary from person to person.)',
+    category: 'Beauty',
+    department: 'Wellness',
+    regularPrice: 1299,
+    discountPrice: 799,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['scalp massager', 'head massager', 'hair', 'relax', 'self care', 'massage', 'asmr'],
+    images: [
+      'https://images.meesho.com/images/products/929380952/qi4ba_512.webp',
+      'https://images.meesho.com/images/products/929380952/oomaj_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/scalp-massage-electric-massager-multicolour-head-massager-hair-massager-for-hair-growth-scalp-massager-head-massager-vibrating-machine-body-massager/p/fdbuxk',
+  },
+  {
+    retailHeading: 'Mini Galaxy Star Projector — Ceiling Night Light',
+    longDescription: 'Projects stars and a soft nebula glow across your ceiling and walls. Multiple colour modes and adjustable brightness, USB powered with a timer option. Popular for bedrooms, study corners, and relaxing in the evening.',
+    category: 'Electronics',
+    department: 'Smart Home',
+    regularPrice: 3499,
+    discountPrice: 2199,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['galaxy projector', 'star projector', 'night light', 'room decor', 'led projector', 'ceiling light', 'nebula'],
+    images: [
+      'https://images.meesho.com/images/products/447360387/75yop_512.webp',
+      'https://images.meesho.com/images/products/447360387/aerfu_512.webp',
+      'https://images.meesho.com/images/products/447360387/mpnnm_512.webp',
+      'https://images.meesho.com/images/products/447360387/gg23z_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/astronaut-galaxy-star-projector-night-light-with-timer-star-projector-360rotation-magnetic-head-decorating-bedroom-home-theater-kids-room-study-and-playroom-night-light-astronaut-led-projection-lamp-with-remote-control-with-usb-cable/p/7echhf',
+  },
+  {
+    retailHeading: 'Heatless Curling Rope Set — No-Heat Overnight Curls',
+    longDescription: 'A soft heatless curling set — wrap slightly damp hair around the rope, leave it in (overnight works well), then unwrap for waves with no heat damage. Reusable and travel-friendly. Results vary with hair type and how long you leave it in.',
+    category: 'Beauty',
+    department: 'Hair',
+    regularPrice: 999,
+    discountPrice: 599,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['heatless curls', 'curling rope', 'hair curler', 'no heat', 'beauty', 'hair styling', 'curl set'],
+    images: [
+      'https://images.meesho.com/images/products/608377386/dzxm9_512.webp',
+      'https://images.meesho.com/images/products/608377386/3qoun_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/shopkite-heatless-hair-curler-set-pack-of-3-satin-flexible-curling-rods-with-hook-for-overnight-no-heat-curls-soft-rollers-for-all-hair-types-brown/p/a27mzu',
+  },
+  {
+    retailHeading: 'Acupressure Neck Relaxer — Tech-Neck Tension Relief',
+    longDescription: 'A simple neck cradle you lie back on for around 10 minutes to help ease neck and shoulder tension from long phone or desk use. Lightweight and easy to store. This is a relaxation aid, not a medical device — stop use if you feel pain, and see a doctor for ongoing issues.',
+    category: 'Beauty',
+    department: 'Wellness',
+    regularPrice: 1199,
+    discountPrice: 699,
+    deliveryCharge: 0,
+    taxRate: 18,
+    searchKeywords: ['neck relaxer', 'cervical traction', 'neck massager', 'tech neck', 'shoulder relief', 'wellness', 'posture'],
+    images: [
+      'https://images.meesho.com/images/products/600754228/uqtro_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/ukarus-neck-stretcher-for-neck-relief-neck-and-shoulder-relaxer-cervical-spine-traction-device-to-relieve-neck-and-shoulder-fatigue-and-pain-chiropractic-pillow-relief-tmj-muscle-pain-blue/p/9xo8xg',
+  },
+  // ─── END NEW LAUNCH PICKS ───
   {
     retailHeading: 'RGB LED Strip Lights — Smart App Control',
     longDescription: 'Transform your room instantly with vibrant RGB lighting. Supports 16 million colours, music sync mode, and app control via Bluetooth. Adhesive backing for easy wall mounting. Perfect for bedrooms, gaming setups, and study desks. Cut-to-length flexibility — works with any room size.',
@@ -100,8 +187,13 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['led', 'rgb', 'room decor', 'smart lights', 'led strip', 'gaming room', 'neon'],
-    images: ['https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
-    supplierLink: 'https://deodap.in/products/13460_3m_led_strip_lights_n_remote',
+    images: [
+      'https://images.meesho.com/images/products/660475347/g4hqt_512.webp',
+      'https://images.meesho.com/images/products/660475347/ri0ny_512.webp',
+      'https://images.meesho.com/images/products/660475347/sl0jr_512.webp',
+      'https://images.meesho.com/images/products/660475347/uymgj_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/5-meter-smart-rgb-led-strip-lights-with-app-remote-music-sync-light-for-room-gaming-party-diwali-home-decoration/p/ax8a1f',
   },
   {
     retailHeading: '360° Magnetic Car & Desk Phone Holder',
@@ -113,7 +205,13 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 12,
     searchKeywords: ['phone holder', 'car mount', 'magnetic', 'mobile stand', 'phone stand', 'car accessories'],
-    images: ['https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800', 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/640427710/nzrru_512.webp',
+      'https://images.meesho.com/images/products/640427710/3oo8u_512.webp',
+      'https://images.meesho.com/images/products/640427710/kj3fz_512.webp',
+      'https://images.meesho.com/images/products/640427710/vldho_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/decent-hub-f16-magnetic-phone-mountholder-for-car-super-strong-magnet-universal-car-mount-dashboard-360-rotation-for-car-desk-office-home-kitchen-for-all-smartphones/p/alal6m',
   },
   {
     retailHeading: 'RYZE TWS Wireless Earbuds — 35Hr Battery',
@@ -125,7 +223,12 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['earbuds', 'wireless', 'tws', 'bluetooth', 'earphones', 'airpods', 'touch control'],
-    images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/738774352/348uy_512.webp',
+      'https://images.meesho.com/images/products/738774352/j9edv_512.webp',
+      'https://images.meesho.com/images/products/738774352/zhmg9_512.webp',
+      'https://images.meesho.com/images/products/738774352/tppsm_512.webp',
+    ],
     supplierLink: 'https://www.meesho.com/tws-wireless-earbuds-touch-control-long-battery-backup/p/c7uhxs',
   },
   {
@@ -138,7 +241,12 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 12,
     searchKeywords: ['popsocket', 'phone grip', 'pop socket', 'phone stand', 'mobile grip', 'phone holder'],
-    images: ['https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/94237492/lurat_512.webp',
+      'https://images.meesho.com/images/products/94237492/aoryb_512.webp',
+      'https://images.meesho.com/images/products/94237492/nvg3d_512.webp',
+      'https://images.meesho.com/images/products/94237492/vvphm_512.webp',
+    ],
     supplierLink: 'https://www.meesho.com/retrack-set-of-2pc-pop-socket-collapsible-grip-stand-for-phones-and-tablets/p/1k3u44',
   },
   {
@@ -151,7 +259,9 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 12,
     searchKeywords: ['posture corrector', 'back support', 'posture belt', 'back brace', 'spine support', 'shoulder support', 'pain relief', 'smartviz', 'lycra'],
-    images: ['https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800', 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/869103287/tgonh_512.webp',
+    ],
     supplierLink: 'https://www.meesho.com/smartviz-relieves-back-pain-posture-corrector-for-men-and-women-back-support-belt-for-pain-relief-improved-posture-and-shoulder-support-lycra-fabric-shoulder-support-belt-for-men-universal-size/p/edfwdz',
   },
   {
@@ -164,11 +274,17 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['fan', 'desk fan', 'usb fan', 'table fan', 'mini fan', 'summer', 'portable fan', 'cooling'],
-    images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/895273562/rtpfc_512.webp',
+      'https://images.meesho.com/images/products/895273562/uzfeo_512.webp',
+      'https://images.meesho.com/images/products/895273562/kuh0t_512.webp',
+      'https://images.meesho.com/images/products/895273562/uhsce_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/mini-portable-rechargeable-handheld-personal-small-desk-fan-with-base-cute-design-fan-for-travelofficedesktop-kids-girls-indoor-outdoor-use-1pc-color-may-vary/p/et0ti2',
   },
   {
     retailHeading: 'Kitchen Storage Containers Set — 6 Pc Airtight, 1200ml Each',
-    longDescription: 'Keep your kitchen organised with this 6-piece multipurpose airtight container set. Each container holds 1200ml — perfect for rice, dal, sugar, snacks, cereals, and dry fruits. Secure airtight lids lock in freshness and keep pests out. Stackable design saves shelf and fridge space. Food-safe plastic, easy to clean. Great for kitchen counters, fridge shelves, and pantry storage. Delivered in 5–6 days.',
+    longDescription: 'Keep your kitchen organised with this 6-piece multipurpose airtight container set. Each jar holds around 1000ml — great for rice, dal, sugar, snacks, cereals, and dry fruits. Secure airtight lids lock in freshness and keep pests out. Stackable design saves shelf and fridge space. Food-safe plastic, easy to clean. Great for kitchen counters, fridge shelves, and pantry storage. Delivered in 5–6 days.',
     category: 'Home',
     department: 'Organisation',
     regularPrice: 499,
@@ -176,12 +292,17 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['organizer', 'fridge organizer', 'storage container', 'kitchen storage', 'airtight container', 'food container', '6 piece'],
-    images: ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'],
-    supplierLink: 'https://deodap.in/products/multipurpose-kitchen-storage-container-1200-ml-6-pc',
+    images: [
+      'https://images.meesho.com/images/products/345879298/l2ewr_512.webp',
+      'https://images.meesho.com/images/products/345879298/puocg_512.webp',
+      'https://images.meesho.com/images/products/345879298/fp5l3_512.webp',
+      'https://images.meesho.com/images/products/345879298/znmld_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/jolter-jar-pack-of-6-1000ml-section-plastic-storage-jar-and-container-square-home-utensils-masala-food-storage-kitchen-utility-airtight-boxes-box-items-kitchen-tools-rice-grocery-set-popula-dabba-spices-basket-fridge-organizer-dibba-barni-dani-fridge-for-vegetables-spice-rack-dryfruits/p/5pxe6a',
   },
   {
     retailHeading: '3-in-1 Fast Charging Cable — Type-C / Lightning / Micro',
-    longDescription: 'One cable for every device in your house. Charges iPhones, Android phones, tablets, earbuds, and more at the same time. Supports 65W fast charging on compatible devices. Durable nylon braided jacket — tangle-free and rated for 10,000+ bends. 1.2m length — perfect for desk or bedside use.',
+    longDescription: 'One cable for every device — charges through Type-C, Lightning, and Micro-USB connectors. Supports fast charging on compatible devices. Durable braided, tangle-free design. (Charging speed depends on your device and adapter.)',
     category: 'Electronics',
     department: 'Charging',
     regularPrice: 399,
@@ -189,7 +310,13 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['charging cable', 'type c', 'fast charge', '3 in 1', 'usb cable', 'charger', 'lightning'],
-    images: ['https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?w=800', 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/793854859/qwjrs_512.webp',
+      'https://images.meesho.com/images/products/793854859/nptao_512.webp',
+      'https://images.meesho.com/images/products/793854859/kzkgj_512.webp',
+      'https://images.meesho.com/images/products/793854859/wvk50_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/3-in-1-120w-fast-charging-cable-6a-6ft-multi-connector-charging-cable/p/d4n2bv',
   },
   {
     retailHeading: 'Aesthetic Sticker Pack — 50 Pcs (Choose Your Style)',
@@ -201,7 +328,11 @@ const DROPSHIP_PRODUCTS = [
     deliveryCharge: 0,
     taxRate: 18,
     searchKeywords: ['wall stickers', 'room decor', 'aesthetic stickers', 'vinyl stickers', 'laptop stickers', 'jdm stickers', 'danish pastel', 'collage kit', 'pack of 50'],
-    images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800', 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800'],
+    images: [
+      'https://images.meesho.com/images/products/295794332/dp1tw_512.webp',
+      'https://images.meesho.com/images/products/295794332/rlvle_512.webp',
+      'https://images.meesho.com/images/products/295794332/nhqza_512.webp',
+    ],
     colors: [
       { name: 'Danish Pastel', hex: '#86efac', images: ['', '', '', ''], supplierLink: 'https://www.meesho.com/peel-n-stick-photo-wall-collage-kit-50-pcs-danish-pastel-room-decor-aesthetic-matisse-wall-art-for-teen-girl-room-decor-small-posters-for-room-decoration-green/p/4w3wd8' },
       { name: 'JDM Cars', hex: '#ef4444', images: ['', '', '', ''], supplierLink: 'https://www.meesho.com/printsheds-pack-of-50-aesthetic-vinyl-stickers-of-racing-carsmultipurpose-stickers-for-decorating-laptopjournalguitarmobile-coverwater-bottlebike-helmetgaming-console/p/7t3e2g' },
@@ -209,17 +340,22 @@ const DROPSHIP_PRODUCTS = [
     supplierLink: '',
   },
   {
-    retailHeading: 'BT Jazz Neckband — 48Hr Battery, Type-C, Water Resistant',
-    longDescription: 'Premium Bluetooth 5.1 neckband with ultra bass and HD stereo sound. Massive 48-hour (2-day) battery life so you never run out mid-day. Type-C fast charging. Water resistant — sweat and rain proof for gym and outdoor use. Unique call vibration alert so you never miss a call. Magnetic earbuds snap together. Durable braided wires. Comes with 1-year warranty.',
+    retailHeading: 'Wireless Bluetooth Neckband — 20Hr Playtime, Type-C',
+    longDescription: 'Wireless Bluetooth 5.0 neckband with 10mm drivers for rich bass and clear sound. Up to 20+ hours of playtime on a full charge, with Type-C fast charging. ENC support for clearer voice calls. Magnetic earbuds that snap together, and a lightweight around-the-neck design for gym, commute, and everyday use.',
     category: 'Electronics',
     department: 'Audio',
     regularPrice: 999,
     discountPrice: 649,
     deliveryCharge: 0,
     taxRate: 18,
-    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'bt jazz', 'wireless neckband', 'waterproof earphones', 'gym earphones', 'type c'],
-    images: ['https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'],
-    supplierLink: 'https://www.meesho.com/bt-jazz-neckband-with-vibration-neckband-bluetooth-wireless-neckband-high-bass-neckband-v51-hd-sound-quality-stereo-bass-with-vibration-grey-true-wireless-type-c-fast-charge-high-bass-clears-treble-long-battery-life-2-days-premium-neckband/p/637723435',
+    searchKeywords: ['neckband', 'earphones', 'bluetooth', 'bass', 'wireless neckband', 'gym earphones', 'type c'],
+    images: [
+      'https://images.meesho.com/images/products/652211041/3mhcu_512.webp',
+      'https://images.meesho.com/images/products/652211041/7fcui_512.webp',
+      'https://images.meesho.com/images/products/652211041/qrwyy_512.webp',
+      'https://images.meesho.com/images/products/652211041/qyj00_512.webp',
+    ],
+    supplierLink: 'https://www.meesho.com/onbiz-wireless-neckband-with-20-hrs-playtime-bluetooth-v50-enx-clear-voice-calls-and-10mm-clarity-drivers/p/asb59d',
   },
 ]
 
@@ -228,21 +364,54 @@ export default function Seeder() {
   const [complete, setComplete] = useState(false)
   const [dropshipLoading, setDropshipLoading] = useState(false)
   const [dropshipComplete, setDropshipComplete] = useState(false)
+  const [dropshipAdded, setDropshipAdded] = useState(0)
+  const [refreshLoading, setRefreshLoading] = useState(false)
+  const [refreshDone, setRefreshDone] = useState(false)
   const [error, setError] = useState('')
-  const { user } = useAuth()
+  const { user, isStaff, loading: authLoading } = useAuth()
   const navigate = useNavigate()
+
+  // Restrict this tool to staff/admin only — it writes directly to the live product database.
+  if (!authLoading && !isStaff) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center p-6 text-center font-jakarta">
+        <div className="max-w-sm">
+          <h1 className="text-white font-black text-xl mb-2">Staff access only</h1>
+          <p className="text-white/50 text-sm mb-6">This page manages the product database and is restricted to staff accounts.</p>
+          <button onClick={() => navigate('/')} className="px-6 py-3 rounded-xl bg-[#c9a962] text-black font-black text-xs uppercase tracking-widest">Back to Store</button>
+        </div>
+      </div>
+    )
+  }
 
   const handleDropshipSeed = async () => {
     if (!user) { setError('You must be logged in.'); return }
     setDropshipLoading(true)
     setError('')
     try {
+      // Read what's already in the store so we never create duplicates.
+      const existingSnap = await getDocs(collection(db, 'products'))
+      const existingNames = new Set(
+        existingSnap.docs.map(d => (d.data().retailHeading || '').trim().toLowerCase())
+      )
+
+      // Only add products whose name isn't already in the store.
+      const toAdd = DROPSHIP_PRODUCTS.filter(
+        p => !existingNames.has((p.retailHeading || '').trim().toLowerCase())
+      )
+
+      if (toAdd.length === 0) {
+        setError('All of these products are already in your store — nothing new to add.')
+        setDropshipLoading(false)
+        return
+      }
+
       const batch = writeBatch(db)
-      DROPSHIP_PRODUCTS.forEach(p => {
+      toAdd.forEach(p => {
         const docRef = doc(collection(db, 'products'))
         batch.set(docRef, {
           ...p,
-          rating: 4.5,
+          rating: 0,
           reviews: 0,
           ordersCount: 0,
           inStock: true,
@@ -256,11 +425,60 @@ export default function Seeder() {
         })
       })
       await batch.commit()
+      setDropshipAdded(toAdd.length)
       setDropshipComplete(true)
     } catch (err) {
       setError(err?.message || 'Failed to add products.')
     } finally {
       setDropshipLoading(false)
+    }
+  }
+
+  // Clears ALL existing products, then reloads the fresh catalog from code
+  // (real images, honest names, 0 reviews). Orders & customers are untouched.
+  const handleRefreshProducts = async () => {
+    if (!user) { setError('You must be logged in.'); return }
+    if (!window.confirm('This will DELETE all current products and reload the fresh catalog from code (real images + honest names). Your orders and customers are NOT affected. Continue?')) return
+    setRefreshLoading(true)
+    setError('')
+    try {
+      // 1. Delete every existing product (batched, Firestore limit ~500 per batch).
+      const snap = await getDocs(collection(db, 'products'))
+      let delBatch = writeBatch(db)
+      let n = 0
+      for (const d of snap.docs) {
+        delBatch.delete(d.ref)
+        n++
+        if (n % 400 === 0) { await delBatch.commit(); delBatch = writeBatch(db) }
+      }
+      await delBatch.commit()
+
+      // 2. Re-add the full catalog fresh from code.
+      const addBatch = writeBatch(db)
+      DROPSHIP_PRODUCTS.forEach(p => {
+        const docRef = doc(collection(db, 'products'))
+        addBatch.set(docRef, {
+          ...p,
+          rating: 0,
+          reviews: 0,
+          ordersCount: 0,
+          inStock: true,
+          sizes: p.sizes || [],
+          colors: p.colors || [],
+          sizeVariants: p.sizeVariants || [],
+          customizable: p.customizable || false,
+          customizationLabel: '',
+          createdBy: user._id || 'system',
+          createdAt: serverTimestamp()
+        })
+      })
+      await addBatch.commit()
+      setDropshipAdded(DROPSHIP_PRODUCTS.length)
+      setRefreshDone(true)
+    } catch (err) {
+      setError(err?.message || 'Failed to refresh products.')
+    } finally {
+      setRefreshLoading(false)
     }
   }
 
@@ -305,9 +523,9 @@ export default function Seeder() {
             { name: 'White', hex: '#f5f5f5' },
           ],
           images: productImages, // Multiple images per product
-          rating: parseFloat((3.5 + Math.random() * 1.5).toFixed(1)),
-          reviews: Math.floor(Math.random() * 120),
-          ordersCount: Math.floor(Math.random() * 500),
+          rating: 0,
+          reviews: 0,
+          ordersCount: 0,
           inStock: true,
           taxRate: base.taxRate,
           searchKeywords: ['seeded', base.category.toLowerCase(), (base.department || '').toLowerCase()],
@@ -351,10 +569,19 @@ export default function Seeder() {
         ) : dropshipComplete ? (
           <div className="text-center py-6 border border-green-500/20 rounded-2xl bg-green-500/5 mb-6">
             <CheckCircle2 className="w-10 h-10 text-green-500 mx-auto mb-3" />
-            <p className="text-white font-bold mb-1">10 Dropship Products Added!</p>
-            <p className="text-white/40 text-xs">Go to Staff Dashboard → Inventory to add your images.</p>
+            <p className="text-white font-bold mb-1">{dropshipAdded} New Product{dropshipAdded === 1 ? '' : 's'} Added!</p>
+            <p className="text-white/40 text-xs">Duplicates already in your store were skipped. Go to Staff Dashboard → Inventory to add your images.</p>
             <button onClick={() => navigate('/staff/dashboard')} className="mt-4 bg-[#c9a962] text-black font-black px-6 py-2 rounded-xl text-sm uppercase">
               Open Inventory
+            </button>
+          </div>
+        ) : refreshDone ? (
+          <div className="text-center py-6 border border-green-500/20 rounded-2xl bg-green-500/5 mb-6">
+            <CheckCircle2 className="w-10 h-10 text-green-500 mx-auto mb-3" />
+            <p className="text-white font-bold mb-1">Catalog Refreshed — {dropshipAdded} Products Loaded!</p>
+            <p className="text-white/40 text-xs">Every product now has its real images and honest name. Open the store to see them.</p>
+            <button onClick={() => navigate('/shop')} className="mt-4 bg-[#c9a962] text-black font-black px-6 py-2 rounded-xl text-sm uppercase">
+              View Store
             </button>
           </div>
         ) : complete ? (
@@ -369,6 +596,19 @@ export default function Seeder() {
         ) : (
           <div>
             {error && <p className="text-red-400 text-sm font-bold bg-red-500/10 rounded-xl p-4 mb-6">{error}</p>}
+
+            {/* Refresh / reload products from code */}
+            <div className="border border-green-500/30 rounded-2xl p-5 bg-green-500/5 mb-6">
+              <p className="text-green-400 font-black text-sm uppercase tracking-widest mb-1">Refresh Products</p>
+              <p className="text-white/50 text-xs mb-4">Replaces all current products with the latest catalog from code — real images, honest names, fresh start. Clears old / duplicate / stock-image products. (Your orders &amp; customers are not affected.)</p>
+              <button
+                onClick={handleRefreshProducts}
+                disabled={refreshLoading}
+                className="w-full bg-green-500 text-black font-black py-3 rounded-xl text-xs uppercase tracking-wide hover:bg-green-400 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+              >
+                {refreshLoading ? <><Loader2 className="w-4 h-4 animate-spin" />Refreshing…</> : '↻ Refresh All Products (Real Images)'}
+              </button>
+            </div>
 
             {/* Dropship Products */}
             <div className="border border-[#c9a962]/20 rounded-2xl p-5 bg-[#c9a962]/5 mb-6">

@@ -161,11 +161,11 @@ export default function Shop() {
       )}
 
       {/* ryze Fast Delivery Toggle */}
-      <FilterSection title="ryze Prime">
+      <FilterSection title="Free Shipping">
         <label className="flex items-center justify-between cursor-pointer group">
           <div>
-            <p className="text-sm font-bold text-white/80">ryze Fast Delivery</p>
-            <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">FREE delivery only</p>
+            <p className="text-sm font-bold text-white/80">Free Delivery</p>
+            <p className="text-[9px] text-white/30 font-bold uppercase tracking-wider">Show free-delivery items</p>
           </div>
           <div
             onClick={() => setFreeDelivery(!freeDelivery)}
@@ -344,7 +344,7 @@ export default function Shop() {
                 onClick={() => setFreeDelivery(!freeDelivery)}
                 className={`flex-shrink-0 px-3 py-1.5 border rounded-full text-[10px] font-bold transition-all ${freeDelivery ? 'bg-white/10 text-white border-white/40' : 'bg-transparent text-white/50 border-white/10'}`}
               >
-                ✓ Prime
+                ✓ Free Shipping
               </button>
               {ALL_CATEGORIES.map(cat => (
                 <button
@@ -513,7 +513,7 @@ export default function Shop() {
                             )}
                           </div>
                           {product.deliveryCharge === 0 && (
-                            <p className="text-[#00a8e1] text-[9px] font-bold flex items-center mt-1">✓ <span className="text-white font-black italic tracking-tight mx-1">prime</span> FREE Delivery by Tomorrow</p>
+                            <p className="text-[#c9a962] text-[9px] font-bold flex items-center mt-1">✓ Free Shipping · 5–7 days</p>
                           )}
                         </div>
                       </motion.article>

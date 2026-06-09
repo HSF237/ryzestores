@@ -14,32 +14,12 @@ export default function Footer() {
             <ChevronUp className="w-4 h-4" /> Back to top
          </button>
 
-         {/* Newsletter */}
-         <div className="border-t border-white/5 bg-black/20">
-            <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
-               <div className="max-w-md">
-                  <h3 className="text-white font-outfit font-black text-2xl uppercase tracking-tighter mb-2">Join the RYZE Club</h3>
-                  <p className="text-white/40 text-sm font-medium leading-relaxed">Sign up for early access to drops, exclusive luxury offers, and the latest in premium tech.</p>
-               </div>
-               <div className="flex w-full md:w-auto gap-2">
-                  <input
-                     type="email"
-                     placeholder="you@ryze.store"
-                     className="flex-1 md:w-80 bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm focus:outline-none focus:border-[#c9a962]/40 text-white"
-                  />
-                  <button className="bg-[#c9a962] text-black font-black px-8 py-4 rounded-xl text-xs uppercase tracking-widest hover:bg-[#b09452] transition-all whitespace-nowrap">
-                     Subscribe
-                  </button>
-               </div>
-            </div>
-         </div>
-
          <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="flex flex-col gap-6">
                <div className="font-outfit font-black text-2xl text-white">
                   RY<span className="text-[#c9a962]">ZE</span>
                </div>
-               <p className="text-sm leading-relaxed text-white/40 font-medium">The pinnacle of luxury shopping. Curated electronics, fashion, and home essentials delivered with ryze precision.</p>
+               <p className="text-sm leading-relaxed text-white/40 font-medium">Everyday electronics, fashion, and home essentials — chosen with care and delivered to your door.</p>
                <div className="flex gap-4">
                   {[
                      { id: 'ig', icon: <Instagram className="w-4 h-4" /> },

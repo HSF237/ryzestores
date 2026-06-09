@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingBag, Menu, Search, Heart, User, ChevronLeft, MapPin, LogOut, X, Gem } from 'lucide-react'
+import { ShoppingBag, Menu, Search, Heart, User, ChevronLeft, MapPin, LogOut, X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useAuth } from '../context/AuthContext'
@@ -58,10 +58,23 @@ export default function Navbar() {
 
           {/* Section 1: Brand & Identity */}
           <div className="flex items-center gap-4 shrink-0">
-             <Link to="/" className="font-outfit font-black text-xl sm:text-2xl tracking-tighter text-white flex items-center gap-2 group">
-               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#c9a962] rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-[#c9a962]/20">
-                  <Gem className="w-5 h-5 text-black" />
-               </div>
+             <Link to="/" className="font-outfit font-black text-xl sm:text-2xl tracking-tighter text-white flex items-center gap-2.5 group" aria-label="RYZE home">
+               <svg viewBox="0 0 100 100" className="w-9 h-9 sm:w-11 sm:h-11 group-hover:scale-105 transition-transform drop-shadow-[0_2px_8px_rgba(201,169,98,0.35)]" aria-hidden="true">
+                 <defs>
+                   <linearGradient id="ryzeGold" x1="0" y1="1" x2="1" y2="0">
+                     <stop offset="0" stopColor="#B5781D" />
+                     <stop offset="0.5" stopColor="#F5C24B" />
+                     <stop offset="1" stopColor="#FFF0C2" />
+                   </linearGradient>
+                 </defs>
+                 <polygon points="50,6 88.1,28 88.1,72 50,94 11.9,72 11.9,28" fill="#0c0a16" stroke="url(#ryzeGold)" strokeWidth="4" strokeLinejoin="round" />
+                 <rect x="29" y="56" width="8" height="13" rx="2" fill="#7a5414" />
+                 <rect x="42" y="48" width="8" height="21" rx="2" fill="#7a5414" />
+                 <rect x="55" y="40" width="8" height="29" rx="2" fill="#7a5414" />
+                 <rect x="68" y="32" width="8" height="37" rx="2" fill="#7a5414" />
+                 <path d="M24,66 L40,56 L56,44 L74,30" fill="none" stroke="url(#ryzeGold)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                 <path d="M63,30 L80,23 L73,41 Z" fill="url(#ryzeGold)" />
+               </svg>
                <span className="hidden lg:inline">RY<span className="text-[#c9a962]">ZE</span></span>
              </Link>
 

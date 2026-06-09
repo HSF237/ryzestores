@@ -24,7 +24,7 @@ export default function Checkout() {
   const [selectedAddress, setSelectedAddress] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
   const [isSettingPrimary, setIsSettingPrimary] = useState(true)
-  const [paymentMethod, setPaymentMethod] = useState('COD')
+  const [paymentMethod, setPaymentMethod] = useState('RAZORPAY')
   const [promoCode, setPromoCode] = useState('')
   const [discount, setDiscount] = useState(0)
   const [promoError, setPromoError] = useState('')
@@ -201,7 +201,8 @@ export default function Checkout() {
           qty: Number(i.qty || 1),
           size: i.size || 'Standard',
           color: i.color || 'Default',
-          image: i.image || (i.images && i.images[0]) || ''
+          image: i.image || (i.images && i.images[0]) || '',
+          supplierLink: i.supplierLink || ''
         })),
         shippingAddress: {
           street: selectedAddress.street || '',
@@ -386,8 +387,7 @@ export default function Checkout() {
 
                 <div className="grid grid-cols-1 gap-4">
                   {[
-                    { id: 'RAZORPAY', name: 'Digital UPI / GPay / Cards', desc: 'Secure payment via Razorpay Infrastructure', icon: '💎', color: 'from-blue-500/20' },
-                    { id: 'COD', name: 'ryze Cash on Delivery', desc: 'Settle upon successful arrival', icon: '📦', color: 'from-[#c9a962]/20' }
+                    { id: 'RAZORPAY', name: 'Digital UPI / GPay / Cards', desc: 'Secure online payment via Razorpay', icon: '💎', color: 'from-blue-500/20' }
                   ].map(method => (
                     <div
                       key={method.id}
@@ -659,29 +659,6 @@ export default function Checkout() {
                       className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-xs outline-none focus:border-[#c9a962] transition-all"
                       value={newAddress.phone}
                       onChange={e => setNewAddress({ ...newAddress, phone: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="relative">
-                      <input
-                        required
-                        list="time-suggestions"
-                        placeholder="Preferred Time (e.g. 10 AM)"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-xs outline-none focus:border-[#c9a962] transition-all"
-                        value={newAddress.deliveryTime}
-                        onChange={e => setNewAddress({ ...newAddress, deliveryTime: e.target.value })}
-                      />
-                      <datalist id="time-suggestions">
-                        <option value="08:00 - 12:00 (Morning)" />
-                        <option value="12:00 - 16:00 (Afternoon)" />
-                        <option value="16:00 - 20:00 (Evening)" />
-                      </datalist>
-                    </div>
-                    <input
-                      required placeholder="Handling Notes"
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 text-xs outline-none focus:border-[#c9a962] transition-all"
-                      value={newAddress.instructions}
-                      onChange={e => setNewAddress({ ...newAddress, instructions: e.target.value })}
                     />
                   </div>
                 </div>

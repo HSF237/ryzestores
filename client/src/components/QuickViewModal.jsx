@@ -119,7 +119,7 @@ export default function QuickViewModal({ product, onClose }) {
                   width={800}
                   quality={80}
                   wrapperClassName="w-full h-full"
-                  className="object-cover"
+                  objectFit="contain"
                 />
               </AnimatePresence>
 
@@ -293,12 +293,12 @@ export default function QuickViewModal({ product, onClose }) {
               <div className="flex items-center gap-3">
                 <Truck className="w-4 h-4 text-[#c9a962]" />
                 <p className="text-[10px] font-black text-white uppercase tracking-tight">
-                  {product.deliveryCharge === 0 ? 'FREE ryze Delivery by Tomorrow' : `+ ₹${product.deliveryCharge} Shipping Fee`}
+                  {product.deliveryCharge === 0 ? 'FREE Delivery · 5–7 days' : `+ ₹${product.deliveryCharge} Shipping · 5–7 days`}
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <ShieldCheck className="w-4 h-4 text-[#c9a962]" />
-                <p className="text-[10px] font-black text-white/60 uppercase tracking-tight">100% Genuine Luxury Asset</p>
+                <p className="text-[10px] font-black text-white/60 uppercase tracking-tight">Quality-Checked Product</p>
               </div>
             </div>
 

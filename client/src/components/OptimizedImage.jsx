@@ -22,6 +22,7 @@ export default function OptimizedImage({
   onClick,
   onError,
   style,
+  objectFit = 'cover', // 'cover' (fill+crop) or 'contain' (show whole image)
 }) {
   const [loaded, setLoaded] = useState(false)
   const [inView, setInView] = useState(priority) // priority images load immediately
@@ -61,6 +62,8 @@ export default function OptimizedImage({
 
   const thumbSrc = optimizeSrc(src, 20, 20)     // tiny blurred placeholder
   const fullSrc = optimizeSrc(src, width || 800, quality)
+  // Literal class names so Tailwind generates them.
+  const fitClass = objectFit === 'contain' ? 'object-contain' : 'object-cover'
 
   return (
     <div
@@ -88,7 +91,7 @@ export default function OptimizedImage({
           fetchpriority={priority ? 'high' : 'auto'}
           onLoad={() => setLoaded(true)}
           onError={onError}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`}
+          className={`w-full h-full ${fitClass} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`}
         />
       )}
 
