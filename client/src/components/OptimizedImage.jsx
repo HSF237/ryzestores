@@ -57,11 +57,13 @@ export default function OptimizedImage({
       const base = url.split('?')[0]
       return `${base}?auto=format&fit=crop&w=${w}&q=${q}`
     }
-    // For Meesho images, request a resized width (tiny for the blur placeholder,
-    // smaller for cards) so they load faster directly from Meesho's CDN.
+    // Meesho images are hosted on their servers, which throttle hotlinking and
+    // hang under load. We serve locally-downloaded copies from /public/products
+    // instead (run download-images.mjs once to populate them).
     if (url.includes('images.meesho.com')) {
-      const base = url.split('?')[0]
-      return `${base}?width=${w}`
+      const mm = url.match(/products\/(\d+)\/([a-z0-9]+)_/i)
+      if (mm) return `/products/${mm[1]}_${mm[2]}.webp`
+      return url
     }
     return url
   }
@@ -70,6 +72,10 @@ export default function OptimizedImage({
   const fullSrc = optimizeSrc(src, width || 800, quality)
   // Literal class names so Tailwind generates them.
   const fitClass = objectFit === 'contain' ? 'object-contain' : 'object-cover'
+  // If a locally-hosted Meesho copy is missing, fall back to Meesho's resized URL.
+  const meeshoFallback = src && src.includes('images.meesho.com')
+    ? src.split('?')[0] + '?width=512'
+    : null
 
   return (
     <div
@@ -96,7 +102,14 @@ export default function OptimizedImage({
           decoding="async"
           fetchpriority={priority ? 'high' : 'auto'}
           onLoad={() => setLoaded(true)}
-          onError={onError}
+          onError={(e) => {
+            if (meeshoFallback && e.currentTarget.dataset.fb !== '1') {
+              e.currentTarget.dataset.fb = '1'
+              e.currentTarget.src = meeshoFallback
+              return
+            }
+            if (onError) onError(e)
+          }}
           className={`w-full h-full ${fitClass} transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`}
         />
       )}
