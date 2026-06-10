@@ -57,6 +57,12 @@ export default function OptimizedImage({
       const base = url.split('?')[0]
       return `${base}?auto=format&fit=crop&w=${w}&q=${q}`
     }
+    // For Meesho images, request a resized width (tiny for the blur placeholder,
+    // smaller for cards) so they load faster directly from Meesho's CDN.
+    if (url.includes('images.meesho.com')) {
+      const base = url.split('?')[0]
+      return `${base}?width=${w}`
+    }
     return url
   }
 
