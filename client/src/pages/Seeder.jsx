@@ -90,6 +90,37 @@ const BASE_PRODUCTS = [
 ]
 
 const DROPSHIP_PRODUCTS = [
+  // ─── BATCH 3: RESEARCHED WINNERS (July 2026) ───
+  // Staff notes below record the SUPPLIER's Meesho rating/price — for your sourcing
+  // reference only. Customer-facing ratings stay 0 until real buyers review.
+  {
+    // SUPPLIER NOTE: Meesho ₹156 · 4.0★ · 1,972 reviews — excellent, proven seller
+    retailHeading: 'Universal Stylus Pen — For Phone & Tablet',
+    longDescription: 'Universal stylus pen that works on any touchscreen phone or tablet — no Bluetooth pairing or app needed. Fine-point disc tip lets you see exactly where you write, with a lightweight metal body and magnetic cap. Great for notes, drawing, and everyday tapping.',
+    category: 'Accessories', department: 'Mobile', regularPrice: 899, discountPrice: 499, deliveryCharge: 0, taxRate: 18,
+    searchKeywords: ['stylus', 'stylus pen', 'tablet pen', 'touch pen', 'drawing', 'notes', 'ipad pen'],
+    images: ['https://images.meesho.com/images/products/778864502/xa079_512.webp'],
+    supplierLink: 'https://www.meesho.com/stylus-pen-for-android-tablet-ios-all-touchscreen-devices-capacitive-universal-smart-pen-pencil-with-fine-point-disc-tip-lightweight-metal-body-and-magnetic-cover-for-mobile-phone-ipad-tab-black/p/cvprp2',
+  },
+  {
+    // SUPPLIER NOTE: Meesho ₹183 · 3.8★ — viral content potential (cats chasing it)
+    retailHeading: 'Self-Rolling LED Cat Toy Ball — Auto 360°',
+    longDescription: 'Interactive cat toy ball that rolls and changes direction on its own, with colour LED lights to catch your cat\'s attention. USB rechargeable, so it keeps your cat playing hands-free while you relax. (Supervise your pet during play and switch it off when unattended.)',
+    category: 'Home', department: 'Pet Supplies', regularPrice: 999, discountPrice: 599, deliveryCharge: 0, taxRate: 18,
+    searchKeywords: ['cat toy', 'pet toy', 'laser toy', 'cat ball', 'interactive toy', 'kitten', 'pets'],
+    images: ['https://images.meesho.com/images/products/947651962/h7k6a_512.webp'],
+    supplierLink: 'https://www.meesho.com/mishtin-creationpack-of-1-smart-led-360-automatic-rotating-cat-toy-ball-with-multicolor-rgb-lights-usb-rechargeable-self-rolling-interactive-teaser-ball-intelligent-obstacle-avoidance-hands-free-exercise-toy-multicolor/p/fo7gxm',
+  },
+  {
+    // SUPPLIER NOTE: Meesho ₹1,230 · 4.4★ · 19 reviews — highest-ticket item, ~₹1,200 profit
+    retailHeading: 'Wall-Mounted Grain Dispenser — 6 Grid Kitchen Storage',
+    longDescription: 'Wall-mounted 6-grid dry food dispenser for rice, dal, cereals, and snacks. Press the knob to pour out a measured amount — keeps grains sealed, fresh, and away from pests. Transparent compartments so you can see when it\'s time to refill. Mounts on a wall or stands on the counter.',
+    category: 'Home', department: 'Kitchen', regularPrice: 3999, discountPrice: 2499, deliveryCharge: 0, taxRate: 18,
+    searchKeywords: ['rice dispenser', 'grain storage', 'cereal dispenser', 'kitchen storage', 'organizer', 'food container'],
+    images: ['https://images.meesho.com/images/products/933077075/xmyyz_512.webp'],
+    supplierLink: 'https://www.meesho.com/wall-mounted-dry-food-dispenser-6-grid-cereal-dispensers-kitchen-food-storage-container-grain-for-kitchen-home-plastic-transparent/p/ffj2vn',
+  },
+  // ─── END BATCH 3 ───
   // ─── BATCH 2: 15 GADGET PICKS (real Meesho images + supplier links) ───
   {
     retailHeading: 'Mini Bluetooth Speaker — Pocket Size, Deep Bass',

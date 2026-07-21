@@ -77,6 +77,12 @@ export default function OptimizedImage({
     ? src.split('?')[0] + '?width=512'
     : null
 
+  // Meesho stamps a small watermark ID (e.g. "s-864406996") at the bottom of the
+  // image. Trim the bottom strip off — no zoom, image stays its normal size.
+  const cropWatermark = meeshoFallback
+    ? { clipPath: 'inset(0 0 8% 0)' }
+    : undefined
+
   return (
     <div
       ref={imgRef}
@@ -101,6 +107,7 @@ export default function OptimizedImage({
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
           fetchpriority={priority ? 'high' : 'auto'}
+          style={cropWatermark}
           onLoad={() => setLoaded(true)}
           onError={(e) => {
             if (meeshoFallback && e.currentTarget.dataset.fb !== '1') {
