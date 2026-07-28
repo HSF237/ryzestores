@@ -74,6 +74,7 @@ export default function InventoryManager() {
          customizable: product.customizable || false,
          customizationLabel: product.customizationLabel || '',
          supplierLink: product.supplierLink || '',
+         inStock: product.inStock !== false,
       })
    }
 
@@ -102,6 +103,7 @@ export default function InventoryManager() {
          data.append('customizable', formData.customizable)
          data.append('customizationLabel', formData.customizationLabel)
          data.append('supplierLink', formData.supplierLink)
+         data.append('inStock', formData.inStock)
 
          const urls = [formData.imageUrl1, formData.imageUrl2, formData.imageUrl3, formData.imageUrl4].filter(u => u && u.startsWith('http'))
          urls.forEach(url => data.append('images', url))
@@ -519,6 +521,28 @@ export default function InventoryManager() {
                            />
                            <p className="text-[9px] text-white/20 font-bold uppercase italic text-center">Add misspellings or related terms to help customers find this product.</p>
                         </div>
+
+                         {/* Section: Stock Status */}
+                         <div className="space-y-4 pb-4 border border-white/5 rounded-2xl p-5 bg-white/[0.02]">
+                            <div className="flex items-center justify-between">
+                               <div>
+                                  <label className="flex items-center gap-2 text-xs font-black text-[#c9a962] uppercase tracking-widest">
+                                     Item Availability Status
+                                  </label>
+                                  <p className="text-[10px] text-white/40 font-medium">Turn OFF to mark as Out of Stock in store</p>
+                               </div>
+                               <button
+                                  type="button"
+                                  onClick={() => setFormData({ ...formData, inStock: !formData.inStock })}
+                                  className={`w-12 h-6 rounded-full transition-all relative ${formData.inStock ? 'bg-green-500' : 'bg-red-500/50'}`}
+                               >
+                                  <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${formData.inStock ? 'left-6' : 'left-0.5'}`} />
+                               </button>
+                            </div>
+                            <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-md inline-block ${formData.inStock ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                               Status: {formData.inStock ? 'IN STOCK' : 'OUT OF STOCK'}
+                            </span>
+                         </div>
 
                         {/* Section 7: Supplier Link (Staff Only — hidden from customers) */}
                         <div className="space-y-3 pb-4 border border-blue-500/10 rounded-2xl p-5 bg-blue-500/[0.03]">

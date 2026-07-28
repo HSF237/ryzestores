@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import App from './App'
 import ErrorBoundary from './components/ErrorBoundary'
+import PWAInstallBanner from './components/PWAInstallBanner'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter>
         <App />
+        <PWAInstallBanner />
         <Analytics />
       </BrowserRouter>
     </ErrorBoundary>

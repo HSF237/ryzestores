@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react'
@@ -7,6 +8,29 @@ import OptimizedImage from './OptimizedImage'
 export default function CartSidebar() {
   const navigate = useNavigate()
   const { isOpen, closeCart, items, removeFromCart, updateQty, subtotal, tax, delivery, total } = useCart()
+  const [promoInput, setPromoInput] = useState('')
+  const [discount, setDiscount] = useState(0)
+  const [promoMsg, setPromoMsg] = useState('')
+
+  const handleApplyPromo = () => {
+    const code = promoInput.trim().toUpperCase()
+    if (code === 'WELCOME10') {
+      const d = Math.round(subtotal * 0.10)
+      setDiscount(d)
+      setPromoMsg('✓ 10% Welcome Discount Applied!')
+    } else if (code === 'RYZE50') {
+      setDiscount(50)
+      setPromoMsg('✓ ₹50 Flat Discount Applied!')
+    } else if (code === 'FIRSTBUY') {
+      setDiscount(100)
+      setPromoMsg('✓ ₹100 First Buy Bonus Applied!')
+    } else {
+      setDiscount(0)
+      setPromoMsg('✕ Invalid code. Try WELCOME10 or RYZE50')
+    }
+  }
+
+  const finalTotal = Math.max(0, total - discount)
 
   return (
     <AnimatePresence>
@@ -47,38 +71,28 @@ export default function CartSidebar() {
                 <ul className="space-y-4">
                   {items.map((item, index) => (
                     <motion.li
-                      key={`${item.id}-${index}`}
+                      key={`${item._id || item.id || index}-${item.size}-${item.color}`}
                       layout
-                      className="flex gap-4 pb-4 border-b border-white/10 last:border-0"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex gap-4 p-3 rounded-lg bg-white/5 border border-white/5"
                     >
-                      <div className="w-20 h-24 rounded-lg bg-white/5 flex-shrink-0 overflow-hidden group">
-                        {(item.image || item.images?.[0] || item.productImage || item.imageUrl || item.product?.image) ? (
-                          <OptimizedImage
-                            src={item.image || item.images?.[0] || item.productImage || item.imageUrl || item.product?.image}
-                            alt={item.title ?? item.retailHeading}
-                            width={100}
-                            quality={60}
-                            wrapperClassName="w-full h-full group-hover:scale-110 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white/5 to-transparent text-white/20 text-[8px] font-black uppercase tracking-tighter">
-                            <ShoppingBag className="w-4 h-4 mb-1 opacity-20" />
-                            No Vision
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-outfit font-medium text-sm truncate">{item.title ?? item.retailHeading}</p>
-                        <p className="text-white/60 text-xs mt-0.5">
-                          {item.color && <span>{item.color} </span>}
-                          {item.size && <span> · {item.size}</span>}
-                        </p>
-                        {item.customization && (
-                          <p className="text-[#c9a962]/70 text-[10px] font-bold mt-0.5 truncate">✏ {item.customization}</p>
-                        )}
-                        <p className="text-[#c9a962] font-semibold mt-1">
-                          ₹{((item.price ?? item.discountPrice ?? 0) * item.qty).toLocaleString()}
-                        </p>
+                      <OptimizedImage
+                        src={item.image || (item.images && item.images[0]) || ''}
+                        alt={item.retailHeading || item.title}
+                        width={80}
+                        height={80}
+                        quality={70}
+                        wrapperClassName="w-20 h-20 shrink-0"
+                        className="rounded-lg object-cover"
+                      />
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <h4 className="font-outfit font-semibold text-sm line-clamp-1">{item.retailHeading || item.title}</h4>
+                          <p className="text-xs text-[#c9a962]">₹{(item.discountPrice || item.regularPrice || item.price || 0).toLocaleString()}</p>
+                          <p className="text-[10px] text-white/40">Size: {item.size || 'Standard'} • Color: {item.color || 'Default'}</p>
+                        </div>
                         <div className="flex items-center gap-2 mt-2">
                           <button
                             type="button"
@@ -111,6 +125,31 @@ export default function CartSidebar() {
             </div>
             {items.length > 0 && (
               <div className="p-6 border-t border-white/10 space-y-2">
+                {/* Coupon Voucher Input */}
+                <div className="pb-2 border-b border-white/5">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="PROMO CODE (e.g. WELCOME10)"
+                      value={promoInput}
+                      onChange={e => setPromoInput(e.target.value)}
+                      className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white placeholder:text-white/30 uppercase outline-none focus:border-[#c9a962]"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleApplyPromo}
+                      className="px-3 py-2 bg-white/10 hover:bg-[#c9a962] hover:text-black text-white text-xs font-black uppercase rounded-lg transition-all"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  {promoMsg && (
+                    <p className={`text-[10px] font-bold mt-1 ${discount > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {promoMsg}
+                    </p>
+                  )}
+                </div>
+
                 <div className="flex justify-between text-sm text-white/70">
                   <span>Subtotal</span>
                   <span>₹{subtotal.toLocaleString()}</span>
@@ -123,13 +162,19 @@ export default function CartSidebar() {
                   <span>Delivery</span>
                   <span>₹{delivery}</span>
                 </div>
-                <div className="flex justify-between font-outfit font-semibold text-lg pt-2">
+                {discount > 0 && (
+                  <div className="flex justify-between text-sm text-green-400 font-bold">
+                    <span>Discount</span>
+                    <span>-₹{discount.toLocaleString()}</span>
+                  </div>
+                )}
+                <div className="flex justify-between font-outfit font-semibold text-lg pt-2 border-t border-white/5">
                   <span>Total</span>
-                  <span className="text-[#c9a962]">₹{total.toFixed(0)}</span>
+                  <span className="text-[#c9a962]">₹{finalTotal.toFixed(0)}</span>
                 </div>
                 <button
                   type="button"
-                  onClick={() => { closeCart(); navigate('/checkout') }}
+                  onClick={() => { closeCart(); navigate('/checkout', { state: { promoCode: promoInput, discount } }) }}
                   className="w-full mt-4 py-3 rounded-lg bg-[#c9a962] text-black font-outfit font-semibold hover:bg-[#d4b872] transition-colors"
                 >
                   Checkout

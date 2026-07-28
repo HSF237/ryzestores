@@ -11,7 +11,7 @@ import OptimizedImage from '../components/OptimizedImage'
 
 const BRANDS = ['ryze Collection', 'Aura Luxury', 'Phantom Tech', 'Luxe Wear', 'Precision']
 const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', '8', '9', '10', '11']
-const ALL_CATEGORIES = ['All', 'Footwear', 'Apparel', 'Electronics', 'Beauty', 'Accessories']
+const ALL_CATEGORIES = ['All', 'Electronics', 'Accessories', 'Footwear', 'Home']
 const SORT_OPTIONS = [
   { label: 'Featured', value: 'featured' },
   { label: 'Price: Low to High', value: 'price_asc' },
@@ -417,13 +417,19 @@ export default function Shop() {
                           />
 
                           {/* Badges */}
-                          {discount >= 20 && (
-                            <div className="absolute top-4 left-0 bg-[#c9a962] text-black text-[9px] font-black px-3 py-1 uppercase tracking-widest rounded-r-full shadow-lg">
-                              ryze Deal -{discount}%
+                          {product.inStock === false ? (
+                            <div className="absolute top-4 left-0 bg-red-600/90 text-white text-[9px] font-black px-3 py-1 uppercase tracking-widest rounded-r-full shadow-lg z-20 backdrop-blur-md">
+                              Out of Stock
                             </div>
+                          ) : (
+                            discount >= 20 && (
+                              <div className="absolute top-4 left-0 bg-[#c9a962] text-black text-[9px] font-black px-3 py-1 uppercase tracking-widest rounded-r-full shadow-lg z-20">
+                                ryze Deal -{discount}%
+                              </div>
+                            )
                           )}
-                          {product.deliveryCharge === 0 && (
-                            <div className="absolute top-4 right-4 bg-green-500/80 text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase backdrop-blur-md">
+                          {product.deliveryCharge === 0 && product.inStock !== false && (
+                            <div className="absolute top-4 right-4 bg-green-500/80 text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase backdrop-blur-md z-20">
                               Free Ship
                             </div>
                           )}
@@ -432,27 +438,28 @@ export default function Shop() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                           {/* Quick Add Button (Amazon style) */}
-                          <div className="absolute bottom-2 right-2 flex items-center justify-center z-10 hidden sm:flex">
-                            {/* Keep hidden on desktop to not clash with Size Quick Select, but reveal on mobile! Wait! We actually just render it everywhere for the Amazon vibe. */}
-                            <button
-                              onClick={e => {
-                                e.stopPropagation();
-                                addToCart({
-                                  ...product,
-                                  id: product._id || product.id,
-                                  title: product.retailHeading,
-                                  price: product.discountPrice ?? product.regularPrice,
-                                  size: product.sizes?.[0] || 'One Size',
-                                  color: product.colors?.[0]?.name || 'Default',
-                                  qty: 1,
-                                  image: product.images?.[0] || product.image
-                                });
-                              }}
-                              className="absolute bottom-1.5 right-1.5 w-7 h-7 sm:w-8 sm:h-8 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
-                            >
-                              <Plus className="w-4 h-4 font-black" />
-                            </button>
-                          </div>
+                          {product.inStock !== false && (
+                            <div className="absolute bottom-2 right-2 flex items-center justify-center z-10 hidden sm:flex">
+                              <button
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  addToCart({
+                                    ...product,
+                                    id: product._id || product.id,
+                                    title: product.retailHeading,
+                                    price: product.discountPrice ?? product.regularPrice,
+                                    size: product.sizes?.[0] || 'One Size',
+                                    color: product.colors?.[0]?.name || 'Default',
+                                    qty: 1,
+                                    image: product.images?.[0] || product.image
+                                  });
+                                }}
+                                className="absolute bottom-1.5 right-1.5 w-7 h-7 sm:w-8 sm:h-8 bg-[#c9a962] hover:bg-[#b09452] text-black rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 shadow-black/50 z-20"
+                              >
+                                <Plus className="w-4 h-4 font-black" />
+                              </button>
+                            </div>
+                          )}
 
                           {/* Action Buttons */}
                           <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">

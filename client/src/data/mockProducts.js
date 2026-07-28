@@ -20,12 +20,12 @@ export const HERO_SLIDES = [
 
 export const CATEGORIES = [
   { id: 'electronics', label: 'Tech', slug: 'Electronics', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=60&w=400' },
-  { id: 'apparel', label: 'Fashion', slug: 'Apparel', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=60&w=400' },
+  { id: 'accessories', label: 'Accessories', slug: 'Accessories', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=60&w=400' },
   { id: 'footwear', label: 'Footwear', slug: 'Footwear', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=60&w=400' },
-  { id: 'beauty', label: 'Beauty', slug: 'Beauty', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=60&w=400' },
+  { id: 'audio', label: 'Audio', slug: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=60&w=400' },
   { id: 'home', label: 'Home', slug: 'Home', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=60&w=400' },
-  { id: 'watches', label: 'Watches', slug: 'Accessories', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=60&w=400' },
-  { id: 'fitness', label: 'Fitness', slug: 'Sports', image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&q=60&w=400' },
+  { id: 'watches', label: 'Smartwatch', slug: 'Accessories', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=60&w=400' },
+  { id: 'gadgets', label: 'Gadgets', slug: 'Electronics', image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&q=60&w=400' },
 ]
 
 export const ryze_DROPS = [

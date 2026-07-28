@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /seeder
+Disallow: /staff-gateway
+Disallow: /staff/dashboard
+Disallow: /checkout
+Disallow: /order-success
+Disallow: /profile
+Disallow: /orders
+
+Sitemap: https://ryze-6699e.web.app/sitemap.xml

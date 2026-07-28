@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isLoggedIn() && request.auth.uid == uid;
+    }
+
+    // Role is stored in the user's Firestore doc (not custom claims)
+    function getUserRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isStaff() {
+      return isLoggedIn() && getUserRole() in ['staff', 'admin'];
+    }
+
+    // ─── Products ─────────────────────────────────────────────────────────────
+    // Anyone can read products (public storefront)
+    // Only staff/admin can create, update, delete
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isStaff();
+    }
+
+    // ─── Users ────────────────────────────────────────────────────────────────
+    // Users can only read/write their own document
+    // Staff can read all users (for CustomerManager)
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isStaff();
+      allow create: if isLoggedIn() && request.auth.uid == userId;
+      // Users can update their own doc (cart, addresses, profile)
+      // but cannot change their own role
+      allow update: if isOwner(userId)
+        && !('role' in request.resource.data.diff(resource.data).affectedKeys())
+        || isStaff();
+    }
+
+    // ─── Orders ───────────────────────────────────────────────────────────────
+    // Customers can create orders and read only their own
+    // Staff can read all orders and update them (status, tracking)
+    match /orders/{orderId} {
+      allow create: if isLoggedIn()
+        && request.resource.data.customer == request.auth.uid;
+      allow read: if isLoggedIn()
+        && (resource.data.customer == request.auth.uid || isStaff());
+      allow update: if isStaff();
+      allow delete: if false; // Orders are never deleted
+    }
+
+    // ─── Default: deny everything else ───────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

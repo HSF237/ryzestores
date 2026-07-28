@@ -37,7 +37,7 @@ export default function OrderSuccess() {
   if (!order) return null
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] flex flex-col items-center justify-center px-6 pt-20">
+    <div className="min-h-screen bg-[#0a0a0b] flex flex-col items-center px-6 pt-24 pb-16">
 
       <div className="relative mb-12">
         <motion.div
@@ -114,17 +114,26 @@ export default function OrderSuccess() {
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
         <Link
           to="/shop"
-          className="flex-1 h-16 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-[#c9a962] transition-all"
+          className="flex-1 h-14 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-[#c9a962] transition-all"
         >
           <ShoppingBag className="w-4 h-4" /> Continue Shopping
         </Link>
         <button
-          onClick={() => navigate('/profile', { state: { tab: 'orders' } })}
-          className="flex-1 h-16 border border-white/10 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-white/5 transition-all"
+          onClick={() => navigate('/orders')}
+          className="flex-1 h-14 border border-white/10 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-white/5 transition-all text-white"
         >
           Track My Order <ArrowRight className="w-4 h-4" />
         </button>
       </div>
+
+      <a
+        href={`https://wa.me/?text=${encodeURIComponent(`Hi RYZE Support! I placed order #${order.orderCode} for ₹${order.totalAmount}. Please share delivery updates!`)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 w-full max-w-md h-12 bg-green-500/10 border border-green-500/20 text-green-400 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-green-500/20 transition-all"
+      >
+        💬 Get Instant WhatsApp Updates
+      </a>
 
     </div>
   )

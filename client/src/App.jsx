@@ -4,6 +4,7 @@ import { WishlistProvider } from './context/WishlistContext'
 import { AuthProvider } from './context/AuthContext'
 import Layout from './components/Layout'
 import ScrollToTop from './components/ScrollToTop'
+import ProtectedStaffRoute from './components/ProtectedStaffRoute'
 import Home from './pages/Home'
 import Shop from './pages/Shop'
 import Login from './pages/Login'
@@ -37,11 +38,25 @@ export default function App() {
             {/* Auth */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            {/* Staff (hidden) */}
+            {/* Staff (hidden) — protected routes: staff/admin only */}
             <Route path="/staff-gateway" element={<StaffGateway />} />
-            <Route path="/staff/dashboard" element={<StaffDashboard />} />
-            {/* Database Seeder */}
-            <Route path="/seeder" element={<Seeder />} />
+            <Route
+              path="/staff/dashboard"
+              element={
+                <ProtectedStaffRoute>
+                  <StaffDashboard />
+                </ProtectedStaffRoute>
+              }
+            />
+            {/* Database Seeder — staff/admin only */}
+            <Route
+              path="/seeder"
+              element={
+                <ProtectedStaffRoute>
+                  <Seeder />
+                </ProtectedStaffRoute>
+              }
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </CartProvider>

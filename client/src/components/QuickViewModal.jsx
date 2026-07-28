@@ -262,13 +262,13 @@ export default function QuickViewModal({ product, onClose }) {
             <div className="flex gap-3 sticky bottom-0 bg-[#111112]/95 backdrop-blur-md pt-4 pb-2 mt-auto md:relative md:bg-transparent md:pt-0">
               <motion.button
                 onClick={handleAddToCart}
-                disabled={product.customizable && !customizationText.trim()}
-                className={`flex-1 h-14 sm:h-16 rounded-2xl font-outfit font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${added ? 'bg-green-500 text-white' : 'bg-[#c9a962] text-black hover:bg-[#b09452]'} shadow-[#c9a962]/20 disabled:opacity-40 disabled:cursor-not-allowed`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
+                disabled={product.inStock === false || (product.customizable && !customizationText.trim())}
+                className={`flex-1 h-14 sm:h-16 rounded-2xl font-outfit font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${product.inStock === false ? 'bg-red-500/20 border border-red-500/30 text-red-400 opacity-80 cursor-not-allowed' : added ? 'bg-green-500 text-white shadow-[#c9a962]/20' : 'bg-[#c9a962] text-black hover:bg-[#b09452] shadow-[#c9a962]/20'} disabled:opacity-40 disabled:cursor-not-allowed`}
+                whileHover={product.inStock !== false ? { scale: 1.02 } : {}}
+                whileTap={product.inStock !== false ? { scale: 0.97 } : {}}
               >
                 <ShoppingBag className="w-5 h-5" />
-                {added ? 'Added to Bag! ✓' : 'Add to Bag'}
+                {product.inStock === false ? 'Currently Out of Stock' : added ? 'Added to Bag! ✓' : 'Add to Bag'}
               </motion.button>
 
               <motion.button

@@ -174,6 +174,11 @@ export default function OrderManager() {
                   <p className="text-[10px] font-black uppercase text-white/20 tracking-widest mb-1">Value</p>
                   <h4 className="font-bold text-[#c9a962]">₹{order.totalAmount.toLocaleString()}</h4>
                 </div>
+                {order.items?.some(i => i.supplierLink) && (
+                  <div className="px-2.5 py-1 rounded-full text-[8px] font-black uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/20 hidden sm:block">
+                    Supplier Link
+                  </div>
+                )}
                 <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/5 ${getStatusColor(order.orderStatus)}`}>
                   {order.orderStatus}
                 </div>
@@ -222,6 +227,41 @@ export default function OrderManager() {
                       {selectedOrder.orderStatus}
                     </div>
                   </div>
+
+                  {/* 1-Click Supplier Action Bar */}
+                  {selectedOrder.items?.some(i => i.supplierLink) && (
+                    <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <ExternalLink className="w-4 h-4 text-blue-400" />
+                        <span className="text-xs font-bold text-blue-300">Supplier Order Automation</span>
+                      </div>
+                      <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const addr = `${selectedOrder.shippingAddress?.street}, ${selectedOrder.shippingAddress?.city}, ${selectedOrder.shippingAddress?.state} - ${selectedOrder.shippingAddress?.zip} (Tel: ${selectedOrder.shippingAddress?.phone || ''})`
+                            navigator.clipboard.writeText(addr)
+                            alert('Copied delivery address to clipboard!\n\n' + addr)
+                          }}
+                          className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all"
+                        >
+                          📋 Copy Address
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            selectedOrder.items.forEach(item => {
+                              if (item.supplierLink) window.open(item.supplierLink, '_blank')
+                            })
+                          }}
+                          className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-blue-500/20 flex items-center gap-1.5"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          Open Supplier Links
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-6 rounded-3xl bg-white/5 border border-white/5">
@@ -334,6 +374,17 @@ export default function OrderManager() {
                       >
                         Apply Updates
                       </button>
+
+                      {selectedOrder.shippingAddress?.phone && (
+                        <a
+                          href={`https://wa.me/${selectedOrder.shippingAddress.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${selectedOrder.customer?.name || 'Customer'}! Your RYZE order #${selectedOrder.orderCode} status is now: ${selectedOrder.orderStatus}. Thank you for shopping with RYZE!`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl font-black uppercase tracking-widest text-[9px] hover:bg-green-500/20 transition-all flex items-center justify-center gap-1.5"
+                        >
+                          📲 Text Customer Status on WhatsApp
+                        </a>
+                      )}
                     </div>
                   </div>
 

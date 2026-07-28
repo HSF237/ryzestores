@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   MapPin, CreditCard, ChevronRight, CheckCircle2,
   Home, Briefcase, Plus, X, Loader2, ExternalLink
@@ -18,15 +18,24 @@ export default function Checkout() {
   const { items = [], total = 0, subtotal = 0, tax = 0, delivery = 0 } = cartContext
   const { user = null } = authContext
 
+  // ── TEST OVERRIDE: COD-only for this account ─────────────────────────────
+  const TEST_EMAIL = 'zerox9861@gmail.com'
+  const isCodOnlyUser = user?.email === TEST_EMAIL
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const location = useLocation()
+  const initialPromo = location.state?.promoCode || ''
+  const initialDiscount = location.state?.discount || 0
+
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [addresses, setAddresses] = useState([])
   const [selectedAddress, setSelectedAddress] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
   const [isSettingPrimary, setIsSettingPrimary] = useState(true)
-  const [paymentMethod, setPaymentMethod] = useState('RAZORPAY')
-  const [promoCode, setPromoCode] = useState('')
-  const [discount, setDiscount] = useState(0)
+  const [paymentMethod, setPaymentMethod] = useState(isCodOnlyUser ? 'COD' : 'RAZORPAY')
+  const [promoCode, setPromoCode] = useState(initialPromo)
+  const [discount, setDiscount] = useState(initialDiscount)
   const [promoError, setPromoError] = useState('')
   const [newAddress, setNewAddress] = useState({
     label: 'Home',
@@ -386,9 +395,13 @@ export default function Checkout() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
-                  {[
-                    { id: 'RAZORPAY', name: 'Digital UPI / GPay / Cards', desc: 'Secure online payment via Razorpay', icon: '💎', color: 'from-blue-500/20' }
-                  ].map(method => (
+                  {(isCodOnlyUser
+                    ? [{ id: 'COD', name: 'Cash on Delivery', desc: 'Pay when your order arrives — no card needed', icon: '🚪', color: 'from-green-500/20' }]
+                    : [
+                        { id: 'RAZORPAY', name: 'Digital UPI / GPay / Cards', desc: 'Secure online payment via Razorpay', icon: '💎', color: 'from-blue-500/20' },
+                        { id: 'COD', name: 'Cash on Delivery', desc: 'Pay when your order arrives — no card needed', icon: '🚪', color: 'from-green-500/20' }
+                      ]
+                  ).map(method => (
                     <div
                       key={method.id}
                       onClick={() => setPaymentMethod(method.id)}

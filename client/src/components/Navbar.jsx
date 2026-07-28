@@ -80,26 +80,26 @@ export default function Navbar() {
           </div>
 
           {/* Section 2: Smart Search Architecture */}
-          <div className="hidden sm:flex flex-1 justify-center max-w-2xl px-2">
+          <div className="flex flex-1 justify-center max-w-2xl px-1 sm:px-2">
              <form 
                 onSubmit={(e) => {
                   e.preventDefault()
                   if (searchQuery.trim()) navigate(`/shop?q=${encodeURIComponent(searchQuery)}`)
                 }}
-                className="w-full flex rounded-xl overflow-hidden glass border border-white/10 focus-within:ring-2 focus-within:ring-[#c9a962]/30 transition-all h-10 group"
+                className="w-full flex rounded-xl overflow-hidden glass border border-white/10 focus-within:ring-2 focus-within:ring-[#c9a962]/30 transition-all h-9 sm:h-10 group"
              >
-                <div className="flex items-center pl-4 pr-2 text-white/20 group-focus-within:text-[#c9a962]">
-                   <Search className="w-4 h-4" />
+                <div className="hidden xs:flex items-center pl-3 sm:pl-4 pr-1 text-white/20 group-focus-within:text-[#c9a962]">
+                   <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
                 <input 
                   type="text" 
                   placeholder="Search RYZE..."
-                  className="flex-1 bg-transparent px-2 text-xs font-medium text-white focus:outline-none placeholder:text-white/20"
+                  className="flex-1 bg-transparent px-3 text-xs font-medium text-white focus:outline-none placeholder:text-white/30 min-w-0"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                 />
-                <button type="submit" className="bg-[#c9a962] px-5 flex items-center justify-center hover:bg-[#b59858] transition-colors">
-                   <Search className="w-4 h-4 text-black" />
+                <button type="submit" className="bg-[#c9a962] px-3 sm:px-5 flex items-center justify-center hover:bg-[#b59858] transition-colors shrink-0">
+                   <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" />
                 </button>
              </form>
           </div>
@@ -142,27 +142,7 @@ export default function Navbar() {
 
           </div>
         </div>
-
-        {/* Category Command Bar */}
-        <div className="flex items-center gap-4 py-2 border-t border-white/5 overflow-x-auto no-scrollbar">
-           <div className="flex items-center gap-1 sm:gap-2">
-             {NAV_LINKS.map(link => (
-                <Link 
-                  key={link.label} 
-                  to={link.href} 
-                  className={`text-[10px] sm:text-[11px] font-black uppercase tracking-widest transition-all shrink-0 px-4 py-1.5 rounded-lg border border-transparent ${
-                    link.label === 'Shop All' 
-                      ? 'bg-[#c9a962] text-black shadow-lg shadow-[#c9a962]/10' 
-                      : 'text-white/40 hover:text-white hover:bg-white/5 hover:border-white/5'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-             ))}
-           </div>
-        </div>
       </div>
-
     </motion.header>
   )
 }

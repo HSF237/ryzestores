@@ -258,13 +258,15 @@ export const userService = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const productService = {
-  /** Get all products */
   async getProducts(params = {}) {
-    let q = query(collection(db, 'products'), where('inStock', '==', true))
+    let q = collection(db, 'products')
+    if (params.onlyInStock) {
+      q = query(q, where('inStock', '==', true))
+    }
 
     // We apply sorting & filtering client-side for flexibility
     const snaps = await getDocs(q)
-    let products = snaps.docs.map(d => ({ _id: d.id, ...d.data() }))
+    let products = snaps.docs.map(d => ({ _id: d.id, inStock: d.data().inStock !== false, ...d.data() }))
 
     // Filter by category
     if (params.category && params.category !== 'All') {
@@ -360,7 +362,7 @@ export const productService = {
       supplierLink: data.supplierLink || '',
       rating: 4.5,
       reviews: 0,
-      inStock: true,
+      inStock: data.inStock !== undefined ? (data.inStock === true || data.inStock === 'true') : true,
       ordersCount: 0,
       createdBy: u.uid,
       createdAt: serverTimestamp()
@@ -402,12 +404,13 @@ export const productService = {
       updates.images = updates.images.filter(Boolean)
     }
 
-    // Parse numeric fields
+    // Parse numeric and boolean fields
     if (updates.regularPrice) updates.regularPrice = Number(updates.regularPrice)
     if (updates.discountPrice) updates.discountPrice = Number(updates.discountPrice)
     if (updates.deliveryCharge) updates.deliveryCharge = Number(updates.deliveryCharge)
     if (updates.taxRate) updates.taxRate = Number(updates.taxRate)
     if (updates.productVoucherDiscount) updates.productVoucherDiscount = Number(updates.productVoucherDiscount)
+    if (updates.inStock !== undefined) updates.inStock = (updates.inStock === true || updates.inStock === 'true')
 
     if (updates.sizes) updates.sizes = typeof updates.sizes === 'string' ? JSON.parse(updates.sizes) : updates.sizes
     if (updates.colors) updates.colors = typeof updates.colors === 'string' ? JSON.parse(updates.colors) : updates.colors
@@ -501,20 +504,26 @@ export const orderService = {
   async getMyOrders() {
     const u = auth.currentUser
     if (!u) throw new Error('Not authenticated')
+
+    // NOTE: Using where() alone (no orderBy) avoids the Firestore composite-index
+    // requirement. We sort client-side by createdAt instead — always works.
     const q = query(
       collection(db, 'orders'),
-      where('customer', '==', u.uid),
-      orderBy('createdAt', 'desc')
+      where('customer', '==', u.uid)
     )
     const snaps = await getDocs(q)
-    return snaps.docs.map(d => {
+    const orders = snaps.docs.map(d => {
       const data = d.data()
       return {
         _id: d.id,
         ...data,
-        createdAt: data.createdAt?.toDate?.()?.toISOString?.() || data.createdAt
+        createdAt: data.createdAt?.toDate?.()?.toISOString?.() || data.createdAt || new Date().toISOString()
       }
     })
+
+    // Sort newest-first in JavaScript (no index needed)
+    orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    return orders
   },
 
   /** Get all orders (staff) */
@@ -738,8 +747,21 @@ export const paymentService = {
     }
   },
 
+  /**
+   * ⚠️  PRODUCTION WARNING ⚠️
+   * This function always returns `verified: true` — it is a CLIENT-SIDE STUB only.
+   *
+   * DO NOT enable live Razorpay card/UPI payments until this is replaced with
+   * a Firebase Cloud Function that validates the Razorpay signature server-side.
+   *
+   * Safe modes right now:
+   *   ✅  Cash on Delivery (COD) — no server-side verification needed.
+   *   ❌  Online payment (card, UPI) — UNSAFE until Cloud Function is live.
+   */
   async verifyPayment() {
-    // Verification should happen server-side via Cloud Functions
-    return { message: 'Payment verified (client-side)', verified: true }
+    // TODO: Implement server-side signature verification via Firebase Cloud Function
+    // https://razorpay.com/docs/payments/server-integration/nodejs/payment-gateway/build-integration/#step-5-verify-payment-signature
+    console.warn('[RYZE] verifyPayment() is a stub — do NOT use for live online payments.')
+    return { message: 'Payment verified (client-side stub — COD only)', verified: true }
   }
 }

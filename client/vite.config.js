@@ -14,4 +14,20 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Firebase split into its own cached chunk
+          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          // Animation library
+          'vendor-motion': ['framer-motion'],
+          // Icon library
+          'vendor-icons': ['lucide-react'],
+          // React core
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+  },
 })

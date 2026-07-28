@@ -16,10 +16,18 @@ export default function Footer() {
 
          <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="flex flex-col gap-6">
-               <div className="font-outfit font-black text-2xl text-white">
-                  RY<span className="text-[#c9a962]">ZE</span>
+               <div className="flex items-center gap-2.5">
+                  <img
+                    src="/mylogo.png"
+                    alt="RYZE"
+                    className="w-9 h-9 object-contain"
+                  />
+                  <span className="font-outfit font-black text-2xl text-white">
+                    RY<span className="text-[#c9a962]">ZE</span>
+                  </span>
                </div>
                <p className="text-sm leading-relaxed text-white/40 font-medium">Everyday electronics, fashion, and home essentials — chosen with care and delivered to your door.</p>
+
                <div className="flex gap-4">
                   {[
                      { id: 'ig', icon: <Instagram className="w-4 h-4" /> },
